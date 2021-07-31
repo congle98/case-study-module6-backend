@@ -102,4 +102,5 @@ public class AuthenController {
 
         return (User) this.userDetailsService.loadUserByUsername(principal.getName());
     }
+
 }
