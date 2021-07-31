@@ -4,4 +4,5 @@ import com.casestudycheckerbackend.models.User;
 import com.casestudycheckerbackend.service.IGeneralService;
 
 public interface IUserService extends IGeneralService<User> {
+    User loadUserByUserName(String username);
 }
