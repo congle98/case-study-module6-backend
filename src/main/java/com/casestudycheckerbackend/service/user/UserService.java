@@ -34,8 +34,8 @@ public class UserService implements IUserService {
     public User save(User user) {
         return userRepository.save(user);
     }
-
-    public String getUserName(){
-        return "tung";
+  
+    public User getUser(Long id){
+        return null;
     }
 }
