@@ -35,7 +35,4 @@ public class UserService implements IUserService {
         return userRepository.save(user);
     }
 
-    public User getUser(Long id){
-        return null;
-    }
 }
