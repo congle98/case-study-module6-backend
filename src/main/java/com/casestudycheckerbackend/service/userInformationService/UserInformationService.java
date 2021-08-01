@@ -38,4 +38,11 @@ public class UserInformationService implements IUserInformationService{
     public UserInformation save(UserInformation userInformation) {
         return  userInformationRepository.save(userInformation);
     }
+
+    @Override
+    public UserInformation setViews(Long id) {
+        UserInformation userInformation = userInformationRepository.findById(id).get();
+        userInformation.setNumberOfViews(userInformation.getNumberOfViews()+1);
+        return  userInformationRepository.save(userInformation);
+    }
 }

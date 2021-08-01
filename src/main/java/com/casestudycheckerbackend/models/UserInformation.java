@@ -45,7 +45,7 @@ public class UserInformation {
 
     private Double priceByHour;
 
-    private Double money;
+    private Double money = 100000.0;
 
     private Boolean isProvider = false;
 
