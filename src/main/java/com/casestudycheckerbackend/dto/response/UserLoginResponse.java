@@ -16,4 +16,6 @@ public class UserLoginResponse {
     private Image avatar;
     private String username;
     private List<Role> roles;
+    private Boolean isProvider;
+    private Double money;
 }
