@@ -1,8 +1,12 @@
 package com.casestudycheckerbackend.service.user;
 
+import com.casestudycheckerbackend.dto.response.UserLoginResponse;
+import com.casestudycheckerbackend.models.Image;
 import com.casestudycheckerbackend.models.Role;
 import com.casestudycheckerbackend.models.User;
+import com.casestudycheckerbackend.models.UserInformation;
 import com.casestudycheckerbackend.repository.UserRepository;
+import com.casestudycheckerbackend.service.userInformationService.UserInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +19,9 @@ import java.util.Optional;
 public class UserService implements IUserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserInformationService userInformationService;
 
     @Autowired
     private PasswordEncoder bCryptPasswordEncoder;
@@ -36,6 +43,24 @@ public class UserService implements IUserService {
     @Override
     public User loadUserByUserName(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public UserLoginResponse userToUserLoginResponse(User user) {
+        UserInformation userInformation = userInformationService.findByUser(user);
+        UserLoginResponse userLoginResponse = new UserLoginResponse();
+        userLoginResponse.setId(user.getId());
+        userLoginResponse.setRoles(user.getRoles());
+        userLoginResponse.setUsername(user.getUsername());
+        if(userInformation!=null){
+            for (Image image: userInformation.getImage()
+            ) {
+                if(image.getCategoryImage().getName().equalsIgnoreCase("Avatar")){
+                    userLoginResponse.setAvatar(image);
+                }
+            }
+        }
+        return userLoginResponse;
     }
 
     @Override

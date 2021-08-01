@@ -1,4 +1,8 @@
 package com.casestudycheckerbackend.service.userInformationService;
 
-public interface IUserInformationService {
+import com.casestudycheckerbackend.models.User;
+import com.casestudycheckerbackend.models.UserInformation;
+import com.casestudycheckerbackend.service.IGeneralService;
+public interface IUserInformationService extends IGeneralService<UserInformation> {
+    UserInformation findByUser(User user);
 }

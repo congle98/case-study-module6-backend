@@ -25,5 +25,5 @@ public class Image {
 
     @ManyToOne
     @JsonIgnore
-    private User user;
+    private UserInformation userInformation;
 }

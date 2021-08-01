@@ -30,7 +30,7 @@ public class UserInformation {
     @ManyToOne
     private City city;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "userInformation")
     private List<Image> image;
 
     private Double height;
