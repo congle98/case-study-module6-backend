@@ -45,6 +45,10 @@ public class UserInformation {
 
     private Double priceByHour;
 
+    private Double money;
+
+    private Boolean isProvider = false;
+
 
     private int numberOfViews;
 
