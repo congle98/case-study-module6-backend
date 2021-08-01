@@ -45,4 +45,28 @@ public class UserInformationService implements IUserInformationService{
         userInformation.setNumberOfViews(userInformation.getNumberOfViews()+1);
         return  userInformationRepository.save(userInformation);
     }
+
+    @Override
+    public Boolean isProvider(Long id) {
+       UserInformation  user =  userInformationRepository.getById(id);
+        if(user!=null){
+            Boolean check= user.getIsProvider();
+            user.setIsProvider(!check);
+            userInformationRepository.save(user);
+            return !check;
+        }
+        return false;
+    }
+
+    @Override
+    public Double changePrice(Long id, Double price){
+        UserInformation  user =  userInformationRepository.getById(id);
+        if(user!=null){
+
+            user.setPriceByHour(price);
+            userInformationRepository.save(user);
+            return price;
+        }
+        return 0.0;
+    }
 }
