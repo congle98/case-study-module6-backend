@@ -12,13 +12,15 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
+@Table
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +38,12 @@ public class User implements UserDetails {
     private String email;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
+
+    private String phone;
+
+    private Boolean accountStatus = true;
+
+    private LocalDate joinDate = LocalDate.now();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

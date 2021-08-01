@@ -3,7 +3,7 @@ package com.casestudycheckerbackend.exception;
 public class UserFoundException extends Exception{
 
     public UserFoundException() {
-        super();
+        super("tài khoản đã tồn tại");
     }
 
     public UserFoundException(String message) {
