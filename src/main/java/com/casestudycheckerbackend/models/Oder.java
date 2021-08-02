@@ -28,7 +28,7 @@ public class Oder {
     private LocalDate startTime;
 
     @ManyToOne
-    private StatusOder status;
+    private StatusOder status = new StatusOder(1L);
 
 
 }

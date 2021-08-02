@@ -56,8 +56,8 @@ public class ProviderController {
         return new ResponseEntity<>("Fail", HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<?> createOder(@RequestBody Oder oder, BindingResult bindingResult){
+    @PostMapping("/createOrder")
+    public ResponseEntity<?> createOrder(@RequestBody Oder oder, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return new ResponseEntity<>("Fail", HttpStatus.FAILED_DEPENDENCY);
         }
