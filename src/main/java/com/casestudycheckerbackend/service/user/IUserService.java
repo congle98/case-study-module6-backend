@@ -8,4 +8,6 @@ public interface IUserService extends IGeneralService<User> {
     User loadUserByUserName(String username);
 
     UserLoginResponse userToUserLoginResponse(User user);
+
+
 }

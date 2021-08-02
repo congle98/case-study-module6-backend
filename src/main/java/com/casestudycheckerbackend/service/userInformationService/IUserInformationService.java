@@ -8,7 +8,13 @@ public interface IUserInformationService extends IGeneralService<UserInformation
     UserInformation findByUser(User user);
     UserInformation setViews(Long id);
 
+
     UserInformationUpdateRequest getUserInfoUpdateRequest(Long userId);
 
     UserInformationUpdateRequest userInformationUpdate(UserInformationUpdateRequest userInformationUpdateRequest);
+
+    Boolean isProvider(Long id);
+    Double changePrice(Long id, Double price);
+
+
 }
