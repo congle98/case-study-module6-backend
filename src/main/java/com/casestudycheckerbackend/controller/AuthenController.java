@@ -61,7 +61,7 @@ public class AuthenController {
         //khởi tạo jwt từ đối tượng này
         String jwt = jwtTokenProvider.generateJwtToken(authentication);
         //tạo đối tượng userdetail từ authen.getPrincipal
-        System.out.println("jwt là " + jwt);
+
         if(userService.loadUserByUserName(userLoginRequest.getUsername()).getAccountStatus()){
             return new ResponseEntity<>(new JwtResponse(jwt), HttpStatus.OK);
         }
@@ -78,6 +78,7 @@ public class AuthenController {
         if (userService.loadUserByUserName(user.getUsername()) != null) {
             throw new UserFoundException();
         }
+        System.out.println("đây là thằng user:"+user);
         userService.save(user);
         return new ResponseEntity<>(new MessageResponse("Tạo mới thành công"), HttpStatus.CREATED);
 

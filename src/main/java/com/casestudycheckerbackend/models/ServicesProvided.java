@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -21,5 +22,7 @@ public class ServicesProvided {
 
     private String name;
 
+    @ManyToMany(mappedBy = "services")
+    private List<UserInformation> userInformations;
 
 }

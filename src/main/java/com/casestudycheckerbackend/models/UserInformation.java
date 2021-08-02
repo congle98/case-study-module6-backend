@@ -45,6 +45,13 @@ public class UserInformation {
 
     private Double priceByHour;
 
+    @ManyToMany
+    @JoinTable(
+            name = "user_services",
+            joinColumns = @JoinColumn(name = "userinfo_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id"))
+    private List<ServicesProvided> services;
+
     private Double money = 100000.0;
 
     private Boolean isProvider = false;
