@@ -44,4 +44,16 @@ public class ProviderController {
         return new ResponseEntity<>("Fail", HttpStatus.NOT_FOUND);
     }
 
+
+    @GetMapping("/list2/{id}")
+    public ResponseEntity<?> getListOrder2(@PathVariable Long id){
+        Optional<UserInformation> user = userInformationService.findById(id);
+        if(user.isPresent()){
+            List<Oder> oderList= (List<Oder>) oderService.findByUser(user.get());
+            return new ResponseEntity<>(oderList, HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Fail", HttpStatus.NOT_FOUND);
+    }
+
+
 }
