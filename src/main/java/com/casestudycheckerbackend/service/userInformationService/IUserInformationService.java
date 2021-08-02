@@ -8,4 +8,6 @@ public interface IUserInformationService extends IGeneralService<UserInformation
     UserInformation setViews(Long id);
     Boolean isProvider(Long id);
     Double changePrice(Long id, Double price);
+
+
 }
