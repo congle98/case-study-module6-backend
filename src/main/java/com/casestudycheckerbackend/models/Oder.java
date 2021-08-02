@@ -18,6 +18,7 @@ public class Oder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id ;
+
     @OneToOne
     private UserInformation user;
 
