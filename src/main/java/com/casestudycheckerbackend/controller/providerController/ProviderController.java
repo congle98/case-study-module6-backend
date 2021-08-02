@@ -8,6 +8,7 @@ import com.casestudycheckerbackend.service.userInformationService.IUserInformati
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,6 +54,15 @@ public class ProviderController {
             return new ResponseEntity<>(oderList, HttpStatus.OK);
         }
         return new ResponseEntity<>("Fail", HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<?> createOder(@RequestBody Oder oder, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return new ResponseEntity<>("Fail", HttpStatus.FAILED_DEPENDENCY);
+        }
+        oderService.save(oder);
+        return new ResponseEntity<>("OK", HttpStatus.CREATED);
     }
 
 
