@@ -41,7 +41,7 @@ public class User implements UserDetails {
 
     private String phone;
 
-    private Boolean accountStatus = true;
+    private Boolean accountStatus = false;
 
     private LocalDate joinDate = LocalDate.now();
 
@@ -57,7 +57,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return accountStatus;
     }
 
     @Override

@@ -6,11 +6,13 @@ import com.casestudycheckerbackend.dto.response.MessageResponse;
 import com.casestudycheckerbackend.exception.UserFoundException;
 import com.casestudycheckerbackend.models.User;
 import com.casestudycheckerbackend.security.jwt.JwtTokenProvider;
+import com.casestudycheckerbackend.service.email.EmailService;
 import com.casestudycheckerbackend.service.user.IUserService;
 import com.casestudycheckerbackend.service.user.UserDetailServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -31,6 +33,8 @@ public class AuthenController {
     @Autowired
     private UserDetailServiceImp userDetailsService;
 
+    @Autowired
+    private EmailService emailService;
 
     @Autowired
     private IUserService userService;
@@ -78,6 +82,7 @@ public class AuthenController {
         if (userService.loadUserByUserName(user.getUsername()) != null) {
             throw new UserFoundException();
         }
+        emailService.send(user);
         userService.save(user);
         return new ResponseEntity<>(new MessageResponse("Tạo mới thành công"), HttpStatus.CREATED);
 
