@@ -1,6 +1,7 @@
 package com.casestudycheckerbackend.controller.providerController;
 
 
+import com.casestudycheckerbackend.dto.response.MessageResponse;
 import com.casestudycheckerbackend.models.Oder;
 import com.casestudycheckerbackend.models.UserInformation;
 import com.casestudycheckerbackend.service.oder.IOderService;
@@ -59,10 +60,10 @@ public class ProviderController {
     @PostMapping("/createOrder")
     public ResponseEntity<?> createOrder(@RequestBody Oder oder, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            return new ResponseEntity<>("Fail", HttpStatus.FAILED_DEPENDENCY);
+            return new ResponseEntity<>(new MessageResponse("NOT CREATE"), HttpStatus.FAILED_DEPENDENCY);
         }
         oderService.save(oder);
-        return new ResponseEntity<>("OK", HttpStatus.CREATED);
+        return new ResponseEntity<>(new MessageResponse("OK"), HttpStatus.CREATED);
     }
 
 

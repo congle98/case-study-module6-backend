@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.time.LocalDate;
 
 @Entity
@@ -25,7 +26,8 @@ public class Oder {
 
     private String address;
     private Long hour;
-    private LocalDate startTime;
+    private String startTime;
+    private LocalDate day;
 
     @ManyToOne
     private StatusOder status = new StatusOder(1L);
