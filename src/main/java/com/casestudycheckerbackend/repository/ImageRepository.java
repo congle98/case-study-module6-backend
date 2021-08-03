@@ -1,5 +1,6 @@
 package com.casestudycheckerbackend.repository;
 
+import com.casestudycheckerbackend.models.CategoryImage;
 import com.casestudycheckerbackend.models.Image;
 import com.casestudycheckerbackend.models.User;
 import com.casestudycheckerbackend.models.UserInformation;
@@ -10,5 +11,5 @@ import java.util.List;
 
 @Repository
 public interface ImageRepository extends JpaRepository<Image,Long> {
-
+        Image findByCategoryImageAndUserInformation(CategoryImage categoryImage, UserInformation userInformation);
 }

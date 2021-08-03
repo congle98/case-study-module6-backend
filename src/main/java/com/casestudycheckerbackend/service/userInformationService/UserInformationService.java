@@ -1,9 +1,12 @@
 package com.casestudycheckerbackend.service.userInformationService;
 
+import com.casestudycheckerbackend.dto.request.RegisterProviderRequest;
+import com.casestudycheckerbackend.dto.request.UpdateAvatarRequest;
 import com.casestudycheckerbackend.dto.request.UserInformationUpdateRequest;
 import com.casestudycheckerbackend.models.User;
 import com.casestudycheckerbackend.models.UserInformation;
 import com.casestudycheckerbackend.repository.UserInformationRepository;
+import com.casestudycheckerbackend.service.image.IImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,9 @@ import java.util.Optional;
 public class UserInformationService implements IUserInformationService{
     @Autowired
     private UserInformationRepository userInformationRepository;
+
+    @Autowired
+    private IImageService imageService;
 
 
     @Override
@@ -109,5 +115,35 @@ public class UserInformationService implements IUserInformationService{
             return price;
         }
         return 0.0;
+    }
+
+    @Override
+    public UserInformation providerStatusOff(Long userInformationId) {
+        UserInformation userInformation = userInformationRepository.findById(userInformationId).get();
+        userInformation.setIsProvider(false);
+        return userInformationRepository.save(userInformation);
+    }
+
+    @Override
+    public UserInformation updateAvatar(UpdateAvatarRequest updateAvatarRequest) {
+        imageService.updateAvatarOfUserInformation(updateAvatarRequest);
+        return userInformationRepository.findById(updateAvatarRequest.getUserInformationId()).get();
+
+    }
+
+    @Override
+    public UserInformation addImage(UpdateAvatarRequest updateAvatarRequest) {
+        imageService.addImage(updateAvatarRequest);
+
+        return userInformationRepository.findById(updateAvatarRequest.getUserInformationId()).get();
+    }
+
+    @Override
+    public UserInformation registerProvider(RegisterProviderRequest registerProviderRequest) {
+        UserInformation userInformation = userInformationRepository.findById(registerProviderRequest.getUserInformationId()).get();
+        userInformation.setPriceByHour(registerProviderRequest.getPriceByHour());
+        userInformation.setServices(registerProviderRequest.getServices());
+        userInformation.setIsProvider(true);
+        return userInformationRepository.save(userInformation);
     }
 }
