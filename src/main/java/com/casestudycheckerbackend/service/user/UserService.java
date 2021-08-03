@@ -123,6 +123,7 @@ public class UserService implements IUserService {
              userchange.setEmail(user1.getEmail());
              userchange.setPhone(user1.getPhone());
              userchange.setAccountStatus(user1.getAccountStatus());
+             userchange.setJoinDate(user1.getJoinDate().toString());
              userchange.setRole(user1.getRoles().get(0).getName());
          }
          return  userchange;

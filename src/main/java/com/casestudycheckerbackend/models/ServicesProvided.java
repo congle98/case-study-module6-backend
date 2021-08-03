@@ -25,4 +25,6 @@ public class ServicesProvided {
     @ManyToMany(mappedBy = "services")
     private List<UserInformation> userInformations;
 
+
+
 }
