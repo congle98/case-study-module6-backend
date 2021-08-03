@@ -6,11 +6,15 @@ import com.casestudycheckerbackend.dto.response.MessageResponse;
 import com.casestudycheckerbackend.exception.UserFoundException;
 import com.casestudycheckerbackend.models.User;
 import com.casestudycheckerbackend.security.jwt.JwtTokenProvider;
+import com.casestudycheckerbackend.service.email.EmailService;
+import com.casestudycheckerbackend.service.email.Utiliy;
 import com.casestudycheckerbackend.service.user.IUserService;
 import com.casestudycheckerbackend.service.user.UserDetailServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -19,6 +23,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
 @RestController
@@ -31,6 +36,8 @@ public class AuthenController {
     @Autowired
     private UserDetailServiceImp userDetailsService;
 
+    @Autowired
+    private EmailService emailService;
 
     @Autowired
     private IUserService userService;
@@ -74,12 +81,16 @@ public class AuthenController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<?> saveUser(@RequestBody User user) throws Exception {
+    public ResponseEntity<?> saveUser(@RequestBody User user, HttpServletRequest request) throws Exception {
         if (userService.loadUserByUserName(user.getUsername()) != null) {
             throw new UserFoundException();
         }
+        String siteURL = Utiliy.getSiteURL(request);
+
         System.out.println("đây là thằng user:"+user);
+
         userService.save(user);
+        emailService.send(user,siteURL);
         return new ResponseEntity<>(new MessageResponse("Tạo mới thành công"), HttpStatus.CREATED);
 
 
