@@ -1,5 +1,7 @@
 package com.casestudycheckerbackend.service.oder;
 
+import com.casestudycheckerbackend.dto.response.UserOderResponse;
+import com.casestudycheckerbackend.manager.oder.OderManager;
 import com.casestudycheckerbackend.models.Oder;
 import com.casestudycheckerbackend.models.UserInformation;
 import com.casestudycheckerbackend.repository.OderRepository;
@@ -9,9 +11,11 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class OderService implements IOderService{
+public class OderService implements IOderService {
     @Autowired
     OderRepository oderRepository;
+    @Autowired
+    private OderManager oderManager;
 
     @Override
     public Iterable<Oder> findAll() {
@@ -43,5 +47,10 @@ public class OderService implements IOderService{
     @Override
     public Iterable<Oder> findByUser(UserInformation user) {
         return oderRepository.findByUser(user);
+    }
+
+    @Override
+    public UserOderResponse getOder(long id) {
+        return oderManager.getOder(id);
     }
 }

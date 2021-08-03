@@ -26,21 +26,22 @@ public class ProviderController {
     IOderService oderService;
 
     @PutMapping("/isProvider/{id}")
-    public ResponseEntity<?> isProvider(@PathVariable Long id ){
+    public ResponseEntity<?> isProvider(@PathVariable Long id) {
         boolean check = userInformationService.isProvider(id);
         return new ResponseEntity<>(check, HttpStatus.OK);
     }
+
     @PutMapping("/price/{id}/{price}")
-    public ResponseEntity<?> changePrice(@PathVariable Long id, @PathVariable Double price){
+    public ResponseEntity<?> changePrice(@PathVariable Long id, @PathVariable Double price) {
         Double priceResponse = userInformationService.changePrice(id, price);
         return new ResponseEntity<>(priceResponse, HttpStatus.OK);
     }
 
     @GetMapping("/list/{id}")
-    public ResponseEntity<?> getListOrder(@PathVariable Long id){
+    public ResponseEntity<?> getListOrder(@PathVariable Long id) {
         Optional<UserInformation> user = userInformationService.findById(id);
-        if(user.isPresent()){
-            List<Oder> oderList= (List<Oder>) oderService.findByProvider(user.get());
+        if (user.isPresent()) {
+            List<Oder> oderList = (List<Oder>) oderService.findByProvider(user.get());
             return new ResponseEntity<>(oderList, HttpStatus.OK);
         }
         return new ResponseEntity<>("Fail", HttpStatus.NOT_FOUND);
@@ -48,23 +49,28 @@ public class ProviderController {
 
 
     @GetMapping("/list2/{id}")
-    public ResponseEntity<?> getListOrder2(@PathVariable Long id){
+    public ResponseEntity<?> getListOrder2(@PathVariable Long id) {
         Optional<UserInformation> user = userInformationService.findById(id);
-        if(user.isPresent()){
-            List<Oder> oderList= (List<Oder>) oderService.findByUser(user.get());
+        if (user.isPresent()) {
+            List<Oder> oderList = (List<Oder>) oderService.findByUser(user.get());
             return new ResponseEntity<>(oderList, HttpStatus.OK);
         }
         return new ResponseEntity<>("Fail", HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/createOrder")
-    public ResponseEntity<?> createOrder(@RequestBody Oder oder, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
+    public ResponseEntity<?> createOrder(@RequestBody Oder oder, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(new MessageResponse("NOT CREATE"), HttpStatus.FAILED_DEPENDENCY);
         }
         oderService.save(oder);
         return new ResponseEntity<>(new MessageResponse("OK"), HttpStatus.CREATED);
     }
 
+    @GetMapping("/oder/{id}")
+    public ResponseEntity<?> getOder(
+            @PathVariable long id) {
+        return new ResponseEntity<>(oderService.getOder(id), HttpStatus.OK);
+    }
 
 }
