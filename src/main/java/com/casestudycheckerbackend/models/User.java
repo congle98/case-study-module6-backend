@@ -45,6 +45,11 @@ public class User implements UserDetails {
 
     private Boolean accountStatus = false;
 
+    private Boolean isVerifyEmail = false;
+
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+
     private LocalDate joinDate = LocalDate.now();
 
     @Override
@@ -69,6 +74,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isVerifyEmail;
     }
 }
