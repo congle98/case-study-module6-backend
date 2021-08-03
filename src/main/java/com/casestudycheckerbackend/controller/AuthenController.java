@@ -69,8 +69,12 @@ public class AuthenController {
         String jwt = jwtTokenProvider.generateJwtToken(authentication);
         //tạo đối tượng userdetail từ authen.getPrincipal
 
-        if(userService.loadUserByUserName(userLoginRequest.getUsername()).getAccountStatus()){
+        if(userService.loadUserByUserName(userLoginRequest.getUsername()).getAccountStatus()
+        && userService.loadUserByUserName(userLoginRequest.getUsername()).getIsVerifyEmail()){
             return new ResponseEntity<>(new JwtResponse(jwt), HttpStatus.OK);
+        }
+        else if(!userService.loadUserByUserName(userLoginRequest.getUsername()).getIsVerifyEmail()){
+            return new ResponseEntity<>(new MessageResponse("Tài khoản chưa kích hoạt email"),HttpStatus.EXPECTATION_FAILED);
         }
         else {
             return new ResponseEntity<>(new MessageResponse("Tài khoản đã bị khoá"), HttpStatus.OK);
