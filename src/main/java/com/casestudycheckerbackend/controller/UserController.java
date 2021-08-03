@@ -20,10 +20,7 @@ public class UserController {
 
     @GetMapping("/view/{userId}")
     private ResponseEntity<?>getProfileByUserId(@PathVariable Long userId){
-        Optional <User> user = userService.findById(userId);
-        if(user.isPresent()){
-            return new ResponseEntity<>(user.get(), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(new MessageResponse("fail"), HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(userService.getUserAccount(userId), HttpStatus.OK);
     }
 }
