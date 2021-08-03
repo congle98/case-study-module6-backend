@@ -1,5 +1,6 @@
 package com.casestudycheckerbackend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class ServicesProvided {
     private String name;
 
     @ManyToMany(mappedBy = "services")
+    @JsonIgnore
     private List<UserInformation> userInformations;
 
 }

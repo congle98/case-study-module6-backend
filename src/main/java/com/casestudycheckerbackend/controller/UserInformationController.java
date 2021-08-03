@@ -1,8 +1,11 @@
 package com.casestudycheckerbackend.controller;
 
+import com.casestudycheckerbackend.dto.request.RegisterProviderRequest;
+import com.casestudycheckerbackend.dto.request.UpdateAvatarRequest;
 import com.casestudycheckerbackend.dto.request.UserInformationUpdateRequest;
 import com.casestudycheckerbackend.models.User;
 import com.casestudycheckerbackend.models.UserInformation;
+import com.casestudycheckerbackend.service.image.IImageService;
 import com.casestudycheckerbackend.service.userInformationService.IUserInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserInformationController {
     @Autowired
     private IUserInformationService userInformationService;
+    @Autowired
+    private IImageService imageService;
 
     @GetMapping("/view/{userId}")
     private ResponseEntity<?>getProfileByUserId(@PathVariable Long userId){
@@ -38,6 +43,33 @@ public class UserInformationController {
     private  ResponseEntity<?> getUserInformationUpdate(@PathVariable Long userId){
         return new ResponseEntity<>(userInformationService.getUserInfoUpdateRequest(userId),HttpStatus.OK);
     }
+    @PutMapping("/providerStatusOff")
+    private ResponseEntity<?> providerStatusOff(@RequestBody Long userInformationId){
+        return new ResponseEntity<>(userInformationService.providerStatusOff(userInformationId),HttpStatus.OK);
+    }
+
+
+    @PutMapping("/updateAvatar")
+    private ResponseEntity<?> updateAvatar(@RequestBody UpdateAvatarRequest updateAvatarRequest){
+        return new ResponseEntity<>(userInformationService.updateAvatar(updateAvatarRequest),HttpStatus.OK);
+    }
+
+    @DeleteMapping("/deleteImage/{imgId}")
+    private ResponseEntity<?> deleteImage(@PathVariable Long imgId){
+        imageService.delete(imgId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/addImage")
+    private ResponseEntity<?> addImage(@RequestBody UpdateAvatarRequest updateAvatarRequest){
+        return new ResponseEntity<>(userInformationService.addImage(updateAvatarRequest),HttpStatus.OK);
+    }
+
+    @PostMapping("/providerRegister")
+    private ResponseEntity<?> registerProvider(@RequestBody RegisterProviderRequest registerProviderRequest){
+        return new ResponseEntity<>( userInformationService.registerProvider(registerProviderRequest),HttpStatus.OK);
+    }
+
 
 
 }
