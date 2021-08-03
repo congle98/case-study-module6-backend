@@ -9,5 +9,7 @@ public interface IUserService extends IGeneralService<User> {
 
     UserLoginResponse userToUserLoginResponse(User user);
 
+    User findByVerificationCode(String code);
 
+    Boolean verify(String code);
 }
