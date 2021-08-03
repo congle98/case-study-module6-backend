@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Oder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +25,7 @@ public class Oder {
     private String address;
     private Long hour;
     private LocalDate startTime;
+    private Double totalPrice;
 
     @ManyToOne
     private StatusOder status;
