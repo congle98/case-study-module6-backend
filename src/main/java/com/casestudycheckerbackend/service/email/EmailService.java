@@ -13,10 +13,11 @@ import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 
 @Service
-public class EmailService {
+public class EmailService implements EmailSender{
     @Autowired
     JavaMailSender mailSender;
 
+    @Override
     public void send(User user,String siteURL) throws UnsupportedEncodingException, MessagingException {
         String verifyURL =siteURL + "/verify/" +user.getVerificationCode() ;
         System.out.println(verifyURL);
