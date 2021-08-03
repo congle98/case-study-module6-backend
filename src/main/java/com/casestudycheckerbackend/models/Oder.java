@@ -5,24 +5,30 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserServices {
+
+public class Oder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id ;
+    @OneToOne
+    private UserInformation user;
 
     @OneToOne
-    private User user;
+    private UserInformation  provider;
 
-    @OneToOne
-    private ServicesProvided servicesProvided;
+    private String address;
+    private Long hour;
+    private LocalDate startTime;
 
-    private Boolean serviceStatus = true;
+    @ManyToOne
+    private StatusOder status;
 
-    private Double price;
+
 }

@@ -65,6 +65,8 @@ public class UserService implements IUserService {
         return userLoginResponse;
     }
 
+
+
     @Override
     public User save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -74,8 +76,15 @@ public class UserService implements IUserService {
         List<Role> roleList = new ArrayList<>();
         roleList.add(role);
         user.setRoles(roleList);
-
-        return userRepository.save(user);
+        UserInformation userInformation = new UserInformation();
+        User userDB = userRepository.save(user);
+        userInformation.setUser(userDB);
+        userInformation.setFullName(userDB.getUsername());
+        userInformationService.save(userInformation);
+        return userDB;
     }
+
+
+
 
 }
