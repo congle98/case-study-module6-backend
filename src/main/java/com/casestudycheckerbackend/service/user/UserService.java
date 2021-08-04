@@ -1,5 +1,6 @@
 package com.casestudycheckerbackend.service.user;
 
+import com.casestudycheckerbackend.dto.response.UserAccountResponse;
 import com.casestudycheckerbackend.dto.response.UserLoginResponse;
 import com.casestudycheckerbackend.models.Image;
 import com.casestudycheckerbackend.models.Role;
@@ -90,6 +91,8 @@ public class UserService implements IUserService {
     }
 
 
+
+
     @Override
     public User save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -110,6 +113,21 @@ public class UserService implements IUserService {
     }
 
 
+    @Override
+    public UserAccountResponse getUserAccount(Long id) {
+        UserAccountResponse userchange = new UserAccountResponse();
+        Optional<User> user= userRepository.findById(id);
+         if(user.isPresent()){
+             User user1 = user.get();
+             userchange.setUsername(user1.getUsername());
+             userchange.setEmail(user1.getEmail());
+             userchange.setPhone(user1.getPhone());
+             userchange.setAccountStatus(user1.getAccountStatus());
+             userchange.setJoinDate(user1.getJoinDate().toString());
+             userchange.setRole(user1.getRoles().get(0).getName());
+         }
+         return  userchange;
+    }
 
 
 }

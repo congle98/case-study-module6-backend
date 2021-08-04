@@ -1,6 +1,7 @@
 package com.casestudycheckerbackend.controller.providerController;
 
 
+import com.casestudycheckerbackend.dto.response.MessageResponse;
 import com.casestudycheckerbackend.models.Oder;
 import com.casestudycheckerbackend.models.UserInformation;
 import com.casestudycheckerbackend.service.oder.IOderService;
@@ -8,6 +9,7 @@ import com.casestudycheckerbackend.service.userInformationService.IUserInformati
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,6 +55,15 @@ public class ProviderController {
             return new ResponseEntity<>(oderList, HttpStatus.OK);
         }
         return new ResponseEntity<>("Fail", HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/createOrder")
+    public ResponseEntity<?> createOrder(@RequestBody Oder oder, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return new ResponseEntity<>(new MessageResponse("NOT CREATE"), HttpStatus.FAILED_DEPENDENCY);
+        }
+        oderService.save(oder);
+        return new ResponseEntity<>(new MessageResponse("OK"), HttpStatus.CREATED);
     }
 
 

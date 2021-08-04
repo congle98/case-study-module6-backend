@@ -14,6 +14,7 @@ public class CreateOrderRequest {
     private Long providerInformationId;
     private String address;
     private  Long hour;
-    private LocalDate startTime;
+    private String startTime;
+    private LocalDate day;
     private Double totalPrice;
 }
