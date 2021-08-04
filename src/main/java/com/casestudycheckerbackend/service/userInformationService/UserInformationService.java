@@ -4,6 +4,8 @@ import com.casestudycheckerbackend.models.User;
 import com.casestudycheckerbackend.models.UserInformation;
 import com.casestudycheckerbackend.repository.UserInformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -68,5 +70,20 @@ public class UserInformationService implements IUserInformationService{
             return price;
         }
         return 0.0;
+    }
+
+    @Override
+    public Page<UserInformation> findAllProviderByViews(Pageable pageable) {
+        return userInformationRepository.findAllByIsProviderByViews(pageable);
+    }
+
+    @Override
+    public Integer countProviders() {
+        return userInformationRepository.countProviders();
+    }
+
+    @Override
+    public Page<UserInformation> findAllProviderByPrice(Pageable pageable) {
+        return userInformationRepository.findAllByIsProviderByPrice(pageable);
     }
 }

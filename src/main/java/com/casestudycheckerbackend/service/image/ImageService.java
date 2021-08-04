@@ -34,4 +34,9 @@ public class ImageService implements IImageService{
     public Image save(Image image) {
         return imageRepository.save(image);
     }
+
+    @Override
+    public String getAvatars(long id) {
+        return imageRepository.getAvatar(id);
+    }
 }

@@ -1,4 +1,7 @@
 package com.casestudycheckerbackend.service.userServices;
 
-public interface IUserServicesService {
+
+import com.casestudycheckerbackend.service.IGeneralService;
+
+public interface IUserServicesService extends IGeneralService<UserServicesService> {
 }

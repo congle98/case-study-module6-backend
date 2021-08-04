@@ -7,4 +7,5 @@ import com.casestudycheckerbackend.service.IGeneralService;
 import java.util.List;
 
 public interface IImageService extends IGeneralService<Image> {
+    String getAvatars(long id);
 }

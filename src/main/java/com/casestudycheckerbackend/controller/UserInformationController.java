@@ -17,6 +17,7 @@ public class UserInformationController {
 
     @GetMapping("/{userId}")
     private ResponseEntity<?>getProfileByUserId(@PathVariable Long userId){
+        System.out.println(userId);
         User user = new User();
         user.setId(userId);
         UserInformation userInformation = userInformationService.findByUser(user);

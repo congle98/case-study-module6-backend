@@ -22,7 +22,7 @@ public class UserServices {
     @OneToOne
     private ServicesProvided servicesProvided;
 
-    private Boolean serviceStatus = true;
+    private Boolean serviceStatus ;
 
     private Double price;
 }

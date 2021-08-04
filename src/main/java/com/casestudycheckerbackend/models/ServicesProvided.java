@@ -17,6 +17,7 @@ public class ServicesProvided {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "category_service_id")
     private CategoryService categoryService;
 
     private String name;
