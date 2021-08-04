@@ -1,8 +1,13 @@
 package com.casestudycheckerbackend.service.oder;
 
+import com.casestudycheckerbackend.dto.request.CreateOrderRequest;
 import com.casestudycheckerbackend.models.Oder;
+import com.casestudycheckerbackend.models.StatusOder;
+import com.casestudycheckerbackend.models.User;
 import com.casestudycheckerbackend.models.UserInformation;
 import com.casestudycheckerbackend.repository.OderRepository;
+import com.casestudycheckerbackend.service.user.IUserService;
+import com.casestudycheckerbackend.service.userInformationService.IUserInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +17,10 @@ import java.util.Optional;
 public class OderService implements IOderService{
     @Autowired
     OderRepository oderRepository;
+    @Autowired
+    private IUserInformationService userInformationService;
+
+
 
     @Override
     public Iterable<Oder> findAll() {
@@ -43,5 +52,26 @@ public class OderService implements IOderService{
     @Override
     public Iterable<Oder> findByUser(UserInformation user) {
         return oderRepository.findByUser(user);
+    }
+
+    @Override
+    public Oder createNewOrder(CreateOrderRequest createOrderRequest) {
+        User user = new User();
+        user.setId(createOrderRequest.getUserId());
+        UserInformation providerInformation = new UserInformation();
+        providerInformation.setId(createOrderRequest.getProviderInformationId());
+        UserInformation userInformation = userInformationService.findByUser(user);
+        Oder oder = new Oder();
+        oder.setAddress(createOrderRequest.getAddress());
+        oder.setHour(createOrderRequest.getHour());
+        oder.setProvider(providerInformation);
+        oder.setUser(userInformation);
+        oder.setStartTime(createOrderRequest.getStartTime());
+        oder.setTotalPrice(createOrderRequest.getTotalPrice());
+        StatusOder statusOder = new StatusOder();
+        statusOder.setId(1l);
+        oder.setStatus(statusOder);
+        return oderRepository.save(oder);
+
     }
 }
