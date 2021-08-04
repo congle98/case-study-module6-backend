@@ -61,7 +61,7 @@ public class UserService implements IUserService {
         userLoginResponse.setUsername(user.getUsername());
         if(userInformation!=null){
             userLoginResponse.setMoney(userInformation.getMoney());
-            userLoginResponse.setIsProvider(userInformation.getIsProvider());
+            userLoginResponse.setIsProvider(userInformation.getProvider());
             for (Image image: userInformation.getImage()
             ) {
                 if(image.getCategoryImage().getName().equalsIgnoreCase("Avatar")){
