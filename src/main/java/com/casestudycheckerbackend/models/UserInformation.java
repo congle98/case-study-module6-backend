@@ -19,7 +19,6 @@ public class UserInformation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
     @OneToOne
     private User user;
 
