@@ -162,11 +162,11 @@ public class UserInformationService implements IUserInformationService{
     public Page<ProviderHomeResponse> findAllProviderHomePage(Pageable pageable) {
         Page<UserInformation> userInformationPage = userInformationRepository.findAllByIsProvider(true,pageable);
         List<ProviderHomeResponse> providerHomeResponseList = new ArrayList<>();
-        for (UserInformation userInformation: userInformationPage) {
+        for (UserInformation userInformation: userInformationPage.getContent()) {
             ProviderHomeResponse providerHomeResponse = new ProviderHomeResponse();
             providerHomeResponse.setDescription(userInformation.getDescription());
             providerHomeResponse.setPriceByHour(userInformation.getPriceByHour());
-            providerHomeResponse.setUserInformationId(userInformation.getId());
+            providerHomeResponse.setUserId(userInformation.getUser().getId());
             providerHomeResponse.setName(userInformation.getFullName());
             String avatarUrl = "";
             Image image = imageService.avatarByUserInformation(userInformation);
@@ -174,8 +174,8 @@ public class UserInformationService implements IUserInformationService{
                 avatarUrl = image.getUrl();
             }
             List<String> serviceName = new ArrayList<>();
-            List<ServicesProvided> servicesProvideds = providedService.findAllByProvider(userInformation);
-            for (ServicesProvided service: servicesProvideds
+//            List<ServicesProvided> servicesProvideds = providedService.findAllByProvider(userInformation);
+            for (ServicesProvided service: userInformation.getServices()
                  ) {
                 serviceName.add(service.getName());
             }
@@ -194,7 +194,7 @@ public class UserInformationService implements IUserInformationService{
             ProviderHomeResponse providerHomeResponse = new ProviderHomeResponse();
             providerHomeResponse.setDescription(userInformation.getDescription());
             providerHomeResponse.setPriceByHour(userInformation.getPriceByHour());
-            providerHomeResponse.setUserInformationId(userInformation.getId());
+            providerHomeResponse.setUserId(userInformation.getUser().getId());
             providerHomeResponse.setName(userInformation.getFullName());
             List<String> serviceName = new ArrayList<>();
 
@@ -206,5 +206,34 @@ public class UserInformationService implements IUserInformationService{
             providerHomeResponseList.add(providerHomeResponse);
         }
         return  providerHomeResponseList;
+    }
+
+    @Override
+    public Page<ProviderHomeResponse> test(Pageable pageable) {
+        Page<UserInformation> userInformationPage = userInformationRepository.findAllByIsProvider(true,pageable);
+        Page<ProviderHomeResponse> providerHomeResponse = userInformationPage.map(this::convert);
+        return  providerHomeResponse;
+    }
+    @Override
+    public ProviderHomeResponse convert(UserInformation userInformation) {
+             ProviderHomeResponse providerHomeResponse = new ProviderHomeResponse();
+            providerHomeResponse.setDescription(userInformation.getDescription());
+            providerHomeResponse.setPriceByHour(userInformation.getPriceByHour());
+            providerHomeResponse.setUserId(userInformation.getUser().getId());
+            providerHomeResponse.setName(userInformation.getFullName());
+            String avatarUrl = "";
+            Image image = imageService.avatarByUserInformation(userInformation);
+            if(image!=null){
+                avatarUrl = image.getUrl();
+            }
+            List<String> serviceName = new ArrayList<>();
+//            List<ServicesProvided> servicesProvideds = providedService.findAllByProvider(userInformation);
+            for (ServicesProvided service: userInformation.getServices()
+            ) {
+                serviceName.add(service.getName());
+            }
+            providerHomeResponse.setAvatar(avatarUrl);
+            providerHomeResponse.setServicesName(serviceName);
+            return providerHomeResponse;
     }
 }

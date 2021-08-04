@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProviderHomeResponse {
-    private Long userInformationId;
+    private Long userId;
     private String name;
     private String avatar;
     private String description;

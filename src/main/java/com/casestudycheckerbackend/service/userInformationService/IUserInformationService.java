@@ -36,4 +36,8 @@ public interface IUserInformationService extends IGeneralService<UserInformation
     List<ProviderHomeResponse> findAllProviderHome();
 
 
+
+    Page<ProviderHomeResponse> test(Pageable pageable);
+
+    ProviderHomeResponse convert (UserInformation userInformation);
 }
