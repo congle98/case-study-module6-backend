@@ -24,10 +24,10 @@ public class Oder {
 
     private String address;
     private Long hour;
-    private LocalDate startTime;
-    private Double totalPrice;
+
     private String startTime;
     private LocalDate day;
+    private Double totalPrice;
 
     @ManyToOne
     private StatusOder status;

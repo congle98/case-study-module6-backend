@@ -84,4 +84,13 @@ public class UserInformationController {
         return new ResponseEntity<>(new MessageResponse("fail"),HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/getPrice/{id}")
+    public ResponseEntity<?> getPriceOfProvider(@PathVariable Long id){
+        Optional<UserInformation> user = userInformationService.findById(id);
+        if(user.isPresent()){
+            return new ResponseEntity<>(user.get().getPriceByHour(),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new MessageResponse("fail"),HttpStatus.NOT_FOUND);
+    }
+
 }
