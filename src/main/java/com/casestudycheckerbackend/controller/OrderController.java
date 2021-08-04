@@ -5,6 +5,7 @@ import com.casestudycheckerbackend.dto.response.MessageResponse;
 import com.casestudycheckerbackend.models.Oder;
 import com.casestudycheckerbackend.models.StatusOder;
 import com.casestudycheckerbackend.service.oder.IOderService;
+import com.casestudycheckerbackend.service.statusorderservice.IStatusOrderSerivce;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,8 @@ import java.util.Optional;
 public class OrderController {
     @Autowired
     private IOderService oderService;
+    @Autowired
+    private IStatusOrderSerivce statusOrderSerivce;
     @PostMapping("/create")
     public ResponseEntity<?> createNewOrder(@RequestBody CreateOrderRequest createOrderRequest){
         System.out.println("đây là đơn thuê"+createOrderRequest);
