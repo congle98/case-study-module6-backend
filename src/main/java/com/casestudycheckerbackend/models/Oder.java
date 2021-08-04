@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.time.LocalDate;
 
 @Entity
@@ -13,12 +12,10 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Oder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id ;
-
     @OneToOne
     private UserInformation user;
 
@@ -27,11 +24,13 @@ public class Oder {
 
     private String address;
     private Long hour;
+    private LocalDate startTime;
+    private Double totalPrice;
     private String startTime;
     private LocalDate day;
 
     @ManyToOne
-    private StatusOder status = new StatusOder(1L);
+    private StatusOder status;
 
 
 }

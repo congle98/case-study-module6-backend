@@ -38,8 +38,19 @@ public class ImageService implements IImageService{
         CategoryImage categoryImage = new CategoryImage();
         categoryImage.setId(1l);
         Image image = imageRepository.findByCategoryImageAndUserInformation(categoryImage,userInformation);
-        image.setUrl(updateAvatarRequest.getUrl());
-        return imageRepository.save(image);
+        if(image!=null){
+            image.setUrl(updateAvatarRequest.getUrl());
+            return imageRepository.save(image);
+        }
+        else {
+            Image newImage = new  Image();
+            newImage.setCategoryImage(categoryImage);
+            newImage.setUserInformation(userInformation);
+            newImage.setUrl(updateAvatarRequest.getUrl());
+            return  imageRepository.save(newImage);
+        }
+
+
     }
 
     @Override
