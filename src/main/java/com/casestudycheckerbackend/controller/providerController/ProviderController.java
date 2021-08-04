@@ -38,6 +38,7 @@ public class ProviderController {
 
     @GetMapping("/list/{id}")
     public ResponseEntity<?> getListOrder(@PathVariable Long id){
+        System.out.println("đây là id order"+id);
         Optional<UserInformation> user = userInformationService.findById(id);
         if(user.isPresent()){
             List<Oder> oderList= (List<Oder>) oderService.findByProvider(user.get());

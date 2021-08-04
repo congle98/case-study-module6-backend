@@ -41,10 +41,10 @@ public class HomeController {
         Page<ProviderHomeResponse> providers;
         Pageable pageable;
         if(page!=null){
-            pageable = PageRequest.of(page,4);
+            pageable = PageRequest.of(page,8);
         }
         else {
-            pageable = PageRequest.of(0,4);
+            pageable = PageRequest.of(0,8);
         }
         providers = userInformationService.test(pageable);
         return new ResponseEntity<>(providers,HttpStatus.OK);
