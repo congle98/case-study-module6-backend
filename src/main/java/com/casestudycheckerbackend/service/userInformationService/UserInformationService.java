@@ -3,13 +3,22 @@ package com.casestudycheckerbackend.service.userInformationService;
 import com.casestudycheckerbackend.dto.request.RegisterProviderRequest;
 import com.casestudycheckerbackend.dto.request.UpdateAvatarRequest;
 import com.casestudycheckerbackend.dto.request.UserInformationUpdateRequest;
+import com.casestudycheckerbackend.dto.response.ProviderHomeResponse;
+import com.casestudycheckerbackend.models.Image;
+import com.casestudycheckerbackend.models.ServicesProvided;
 import com.casestudycheckerbackend.models.User;
 import com.casestudycheckerbackend.models.UserInformation;
 import com.casestudycheckerbackend.repository.UserInformationRepository;
 import com.casestudycheckerbackend.service.image.IImageService;
+import com.casestudycheckerbackend.service.servicesProvided.IServicesProvidedService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,6 +29,8 @@ public class UserInformationService implements IUserInformationService{
     @Autowired
     private IImageService imageService;
 
+    @Autowired
+    private IServicesProvidedService providedService;
 
     @Override
     public Iterable<UserInformation> findAll() {
@@ -70,7 +81,7 @@ public class UserInformationService implements IUserInformationService{
         userInformationUpdateRequest.setHobbies(userInformation.getHobbies());
         userInformationUpdateRequest.setHeight(userInformation.getHeight());
         userInformationUpdateRequest.setWeight(userInformation.getWeight());
-        userInformationUpdateRequest.setIsProvider(userInformation.getIsProvider());
+        userInformationUpdateRequest.setIsProvider(userInformation.getProvider());
         userInformationUpdateRequest.setPriceByHour(userInformation.getPriceByHour());
         return userInformationUpdateRequest;
     }
@@ -87,7 +98,7 @@ public class UserInformationService implements IUserInformationService{
         userInformation.setHobbies(userInformationUpdateRequest.getHobbies());
         userInformation.setHeight(userInformationUpdateRequest.getHeight());
         userInformation.setWeight(userInformationUpdateRequest.getWeight());
-        userInformation.setIsProvider(userInformationUpdateRequest.getIsProvider());
+        userInformation.setProvider(userInformationUpdateRequest.getIsProvider());
         userInformation.setPriceByHour(userInformationUpdateRequest.getPriceByHour());
         userInformationRepository.save(userInformation);
         return  userInformationUpdateRequest;
@@ -97,8 +108,8 @@ public class UserInformationService implements IUserInformationService{
     public Boolean isProvider(Long id) {
        UserInformation  user =  userInformationRepository.getById(id);
         if(user!=null){
-            Boolean check= user.getIsProvider();
-            user.setIsProvider(!check);
+            Boolean check= user.getProvider();
+            user.setProvider(!check);
             userInformationRepository.save(user);
             return !check;
         }
@@ -120,7 +131,7 @@ public class UserInformationService implements IUserInformationService{
     @Override
     public UserInformation providerStatusOff(Long userInformationId) {
         UserInformation userInformation = userInformationRepository.findById(userInformationId).get();
-        userInformation.setIsProvider(false);
+        userInformation.setProvider(false);
         return userInformationRepository.save(userInformation);
     }
 
@@ -143,7 +154,57 @@ public class UserInformationService implements IUserInformationService{
         UserInformation userInformation = userInformationRepository.findById(registerProviderRequest.getUserInformationId()).get();
         userInformation.setPriceByHour(registerProviderRequest.getPriceByHour());
         userInformation.setServices(registerProviderRequest.getServices());
-        userInformation.setIsProvider(true);
+        userInformation.setProvider(true);
         return userInformationRepository.save(userInformation);
+    }
+
+    @Override
+    public Page<ProviderHomeResponse> findAllProviderHomePage(Pageable pageable) {
+        Page<UserInformation> userInformationPage = userInformationRepository.findAllByIsProvider(true,pageable);
+        List<ProviderHomeResponse> providerHomeResponseList = new ArrayList<>();
+        for (UserInformation userInformation: userInformationPage) {
+            ProviderHomeResponse providerHomeResponse = new ProviderHomeResponse();
+            providerHomeResponse.setDescription(userInformation.getDescription());
+            providerHomeResponse.setPriceByHour(userInformation.getPriceByHour());
+            providerHomeResponse.setUserInformationId(userInformation.getId());
+            providerHomeResponse.setName(userInformation.getFullName());
+            String avatarUrl = "";
+            Image image = imageService.avatarByUserInformation(userInformation);
+            if(image!=null){
+                avatarUrl = image.getUrl();
+            }
+            List<String> serviceName = new ArrayList<>();
+            List<ServicesProvided> servicesProvideds = providedService.findAllByProvider(userInformation);
+            for (ServicesProvided service: servicesProvideds
+                 ) {
+                serviceName.add(service.getName());
+            }
+            providerHomeResponse.setAvatar(avatarUrl);
+            providerHomeResponse.setServicesName(serviceName);
+            providerHomeResponseList.add(providerHomeResponse);
+        }
+        return new PageImpl<>(providerHomeResponseList,pageable,providerHomeResponseList.size());
+    }
+
+    @Override
+    public List<ProviderHomeResponse> findAllProviderHome() {
+        List<UserInformation> userInformations = userInformationRepository.findByIsProvider(true);
+        List<ProviderHomeResponse> providerHomeResponseList = new ArrayList<>();
+        for (UserInformation userInformation: userInformations) {
+            ProviderHomeResponse providerHomeResponse = new ProviderHomeResponse();
+            providerHomeResponse.setDescription(userInformation.getDescription());
+            providerHomeResponse.setPriceByHour(userInformation.getPriceByHour());
+            providerHomeResponse.setUserInformationId(userInformation.getId());
+            providerHomeResponse.setName(userInformation.getFullName());
+            List<String> serviceName = new ArrayList<>();
+
+            for (ServicesProvided service: userInformation.getServices()
+            ) {
+                serviceName.add(service.getName());
+            }
+            providerHomeResponse.setServicesName(serviceName);
+            providerHomeResponseList.add(providerHomeResponse);
+        }
+        return  providerHomeResponseList;
     }
 }
