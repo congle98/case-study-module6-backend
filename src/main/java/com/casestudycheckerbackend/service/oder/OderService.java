@@ -9,6 +9,8 @@ import com.casestudycheckerbackend.repository.OderRepository;
 import com.casestudycheckerbackend.service.user.IUserService;
 import com.casestudycheckerbackend.service.userInformationService.IUserInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -73,5 +75,37 @@ public class OderService implements IOderService{
         oder.setStatus(statusOder);
         return oderRepository.save(oder);
 
+    }
+
+    @Override
+    public StatusOder changeStatus(String status) {
+
+        switch (status){
+            case "WAITING": {
+                StatusOder statusOder= new StatusOder(2L);
+                return statusOder;
+
+            }
+            case "RECEIVED": {
+                StatusOder statusOder= new StatusOder(3L);
+                return statusOder;
+
+            }
+            case "COMPLETE": {
+                StatusOder statusOder= new StatusOder(4L);
+                return statusOder;
+
+            }
+            default: {
+                StatusOder statusOder= new StatusOder(5L);
+                return statusOder;
+            }
+
+        }
+    }
+
+    @Override
+    public StatusOder cancelOrder(String status) {
+        return new StatusOder(5L);
     }
 }
