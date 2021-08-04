@@ -70,4 +70,11 @@ public class ImageService implements IImageService{
     public Image save(Image image) {
         return imageRepository.save(image);
     }
+
+    @Override
+    public Image avatarByUserInformation(UserInformation userInformation) {
+        CategoryImage categoryImage = new CategoryImage();
+        categoryImage.setId(1l);
+        return imageRepository.findByCategoryImageAndUserInformation(categoryImage,userInformation);
+    }
 }

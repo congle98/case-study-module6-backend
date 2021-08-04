@@ -10,7 +10,6 @@ import java.util.List;
 
 @Entity
 @Table
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ServicesProvided {
@@ -27,4 +26,35 @@ public class ServicesProvided {
     @JsonIgnore
     private List<UserInformation> userInformations;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public CategoryService getCategoryService() {
+        return categoryService;
+    }
+
+    public void setCategoryService(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<UserInformation> getUserInformations() {
+        return userInformations;
+    }
+
+    public void setUserInformations(List<UserInformation> userInformations) {
+        this.userInformations = userInformations;
+    }
 }
