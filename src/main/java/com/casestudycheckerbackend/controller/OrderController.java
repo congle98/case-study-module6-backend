@@ -23,38 +23,33 @@ public class OrderController {
     private IOderService oderService;
     @Autowired
     private IStatusOrderSerivce statusOrderSerivce;
+
     @PostMapping("/create")
-    public ResponseEntity<?> createNewOrder(@RequestBody CreateOrderRequest createOrderRequest){
-        System.out.println("đây là đơn thuê"+createOrderRequest);
+    public ResponseEntity<?> createNewOrder(@RequestBody CreateOrderRequest createOrderRequest) {
+        System.out.println("đây là đơn thuê" + createOrderRequest);
         oderService.createNewOrder(createOrderRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/accept/{id}")
-    public ResponseEntity<?> acceptOrder(@PathVariable Long id, @RequestBody String status){
-        Optional<Oder> oder = oderService.findById(id);
-        if(oder.isPresent()){
-            StatusOder newStatus= oderService.changeStatus(status);
-            Oder oderFix = oder.get();
-            oderFix.setStatus(newStatus);
-            oderService.save(oderFix);
-            return new ResponseEntity<>(oderFix, HttpStatus.OK);
-
+    public ResponseEntity<?> acceptOrder(@PathVariable Long id, @RequestBody String status) {
+        if (oderService.acceptOrder(id, status)) {
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(new MessageResponse("fail"),HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("/decline/{id}")
-    public ResponseEntity<?> cancelOrder(@PathVariable Long id, @RequestBody String status){
+    public ResponseEntity<?> cancelOrder(@PathVariable Long id, @RequestBody String status) {
         Optional<Oder> oder = oderService.findById(id);
-        if(oder.isPresent()){
-            StatusOder newStatus= oderService.cancelOrder(status);
+        if (oder.isPresent()) {
+            StatusOder newStatus = oderService.cancelOrder(status);
             Oder oderFix = oder.get();
             oderFix.setStatus(newStatus);
             oderService.save(oderFix);
             return new ResponseEntity<>(oderFix, HttpStatus.OK);
 
         }
-        return new ResponseEntity<>(new MessageResponse("fail"),HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new MessageResponse("fail"), HttpStatus.NOT_FOUND);
     }
 }

@@ -1,6 +1,7 @@
 package com.casestudycheckerbackend.service.oder;
 
 import com.casestudycheckerbackend.dto.request.CreateOrderRequest;
+import com.casestudycheckerbackend.dto.response.MessageResponse;
 import com.casestudycheckerbackend.models.Oder;
 import com.casestudycheckerbackend.models.StatusOder;
 import com.casestudycheckerbackend.models.User;
@@ -16,12 +17,11 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class OderService implements IOderService{
+public class OderService implements IOderService {
     @Autowired
     OderRepository oderRepository;
     @Autowired
     private IUserInformationService userInformationService;
-
 
 
     @Override
@@ -80,24 +80,24 @@ public class OderService implements IOderService{
     @Override
     public StatusOder changeStatus(String status) {
 
-        switch (status){
+        switch (status) {
             case "WAITING": {
-                StatusOder statusOder= new StatusOder(2L);
+                StatusOder statusOder = new StatusOder(2L);
                 return statusOder;
 
             }
             case "RECEIVED": {
-                StatusOder statusOder= new StatusOder(3L);
+                StatusOder statusOder = new StatusOder(3L);
                 return statusOder;
 
             }
             case "COMPLETE": {
-                StatusOder statusOder= new StatusOder(4L);
+                StatusOder statusOder = new StatusOder(4L);
                 return statusOder;
 
             }
             default: {
-                StatusOder statusOder= new StatusOder(5L);
+                StatusOder statusOder = new StatusOder(5L);
                 return statusOder;
             }
 
@@ -107,5 +107,18 @@ public class OderService implements IOderService{
     @Override
     public StatusOder cancelOrder(String status) {
         return new StatusOder(5L);
+    }
+
+    @Override
+    public boolean acceptOrder(Long id, String status) {
+        Optional<Oder> oder = findById(id);
+        if (oder.isPresent()) {
+            StatusOder newStatus = changeStatus(status);
+            Oder oderFix = oder.get();
+            oderFix.setStatus(newStatus);
+            save(oderFix);
+            return true;
+        }
+        return false;
     }
 }
