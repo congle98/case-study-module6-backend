@@ -16,6 +16,10 @@ public class FeedbackOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne
+    @JsonIgnore
+    private UserInformation provider;
+
     private Integer starRating;
 
     private String description;

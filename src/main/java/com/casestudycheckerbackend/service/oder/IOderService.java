@@ -16,4 +16,6 @@ public interface IOderService extends IGeneralService<Oder> {
     StatusOder changeStatus(String status);
     StatusOder cancelOrder(String status);
     Page<Oder> findAllPage(Pageable pageable);
+
+    Page<Oder> finAllByProviderPage(UserInformation provider, Pageable pageable);
 }

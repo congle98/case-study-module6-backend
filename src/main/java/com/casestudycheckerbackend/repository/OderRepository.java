@@ -3,6 +3,8 @@ package com.casestudycheckerbackend.repository;
 import com.casestudycheckerbackend.models.Oder;
 import com.casestudycheckerbackend.models.User;
 import com.casestudycheckerbackend.models.UserInformation;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,5 +17,7 @@ import java.util.Optional;
 public interface OderRepository extends JpaRepository<Oder, Long> {
     Iterable<Oder> findByProvider(UserInformation provider);
     Iterable<Oder> findByUser(UserInformation user);
+
+    Page<Oder> findAllByProvider(UserInformation provider,Pageable pageable);
 
 }
