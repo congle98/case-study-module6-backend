@@ -93,4 +93,6 @@ public class UserInformationController {
         return new ResponseEntity<>(new MessageResponse("fail"),HttpStatus.NOT_FOUND);
     }
 
+
+
 }
