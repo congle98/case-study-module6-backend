@@ -17,4 +17,5 @@ public class CreateOrderRequest {
     private String startTime;
     private LocalDate day;
     private Double totalPrice;
+
 }

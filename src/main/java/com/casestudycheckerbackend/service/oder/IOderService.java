@@ -11,6 +11,7 @@ public interface IOderService extends IGeneralService<Oder> {
     Iterable<Oder> findByProvider(UserInformation provider);
     Iterable<Oder> findByUser(UserInformation user);
     Oder  createNewOrder(CreateOrderRequest createOrderRequest);
-    StatusOder changeStatus(String status);
-    StatusOder cancelOrder(String status);
+    StatusOder changeStatus(Long statusId);
+    Boolean cancelOrder(Long id, Long statusId);
+    Boolean acceptOrder(Long id, Long statusId);
 }
