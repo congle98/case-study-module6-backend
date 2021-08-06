@@ -32,5 +32,7 @@ public class Oder {
     @ManyToOne
     private StatusOder status;
 
+    @OneToOne FeedbackOrder feedback;
+
 
 }

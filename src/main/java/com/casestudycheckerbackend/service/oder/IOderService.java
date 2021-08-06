@@ -6,6 +6,8 @@ import com.casestudycheckerbackend.models.StatusOder;
 import com.casestudycheckerbackend.models.User;
 import com.casestudycheckerbackend.models.UserInformation;
 import com.casestudycheckerbackend.service.IGeneralService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface IOderService extends IGeneralService<Oder> {
     Iterable<Oder> findByProvider(UserInformation provider);
@@ -13,4 +15,5 @@ public interface IOderService extends IGeneralService<Oder> {
     Oder  createNewOrder(CreateOrderRequest createOrderRequest);
     StatusOder changeStatus(String status);
     StatusOder cancelOrder(String status);
+    Page<Oder> findAllPage(Pageable pageable);
 }
