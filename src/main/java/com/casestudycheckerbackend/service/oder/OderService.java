@@ -9,6 +9,8 @@ import com.casestudycheckerbackend.repository.OderRepository;
 import com.casestudycheckerbackend.service.user.IUserService;
 import com.casestudycheckerbackend.service.userInformationService.IUserInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -107,5 +109,11 @@ public class OderService implements IOderService{
     @Override
     public StatusOder cancelOrder(String status) {
         return new StatusOder(5L);
+    }
+
+
+    @Override
+    public Page<Oder> findAllPage(Pageable pageable) {
+        return oderRepository.findAll(pageable);
     }
 }

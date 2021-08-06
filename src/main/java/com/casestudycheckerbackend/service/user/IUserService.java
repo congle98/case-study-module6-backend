@@ -4,6 +4,8 @@ import com.casestudycheckerbackend.dto.response.UserAccountResponse;
 import com.casestudycheckerbackend.dto.response.UserLoginResponse;
 import com.casestudycheckerbackend.models.User;
 import com.casestudycheckerbackend.service.IGeneralService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface IUserService extends IGeneralService<User> {
     User loadUserByUserName(String username);
@@ -15,4 +17,7 @@ public interface IUserService extends IGeneralService<User> {
     Boolean verify(String code);
 
     UserAccountResponse getUserAccount(Long id);
+
+
+    Page<User> findAllPage(Pageable pageable);
 }
