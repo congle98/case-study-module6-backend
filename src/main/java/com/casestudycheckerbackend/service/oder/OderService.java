@@ -153,4 +153,9 @@ public class OderService implements IOderService{
     public Page<Oder> findAllPage(Pageable pageable) {
         return oderRepository.findAll(pageable);
     }
+
+    @Override
+    public Page<Oder> finAllByProviderPage(UserInformation provider, Pageable pageable) {
+        return oderRepository.findAllByProvider(provider,pageable);
+    }
 }

@@ -18,4 +18,7 @@ public interface IOderService extends IGeneralService<Oder> {
     Boolean acceptOrder(Long id, Long statusId);
     Page<Oder> findAllPage(Pageable pageable);
 
+
+    Page<Oder> finAllByProviderPage(UserInformation provider, Pageable pageable);
+
 }
