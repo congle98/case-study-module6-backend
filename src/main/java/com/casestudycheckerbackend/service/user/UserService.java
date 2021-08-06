@@ -11,6 +11,8 @@ import com.casestudycheckerbackend.service.email.EmailService;
 import com.casestudycheckerbackend.service.userInformationService.UserInformationService;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -130,4 +132,8 @@ public class UserService implements IUserService {
     }
 
 
+    @Override
+    public Page<User> findAllPage(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
 }
