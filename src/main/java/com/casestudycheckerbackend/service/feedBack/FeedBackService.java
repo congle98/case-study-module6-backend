@@ -62,7 +62,7 @@ public class FeedBackService implements IFeedBackService {
         feedbackOrder.setOder(oder);
         feedbackOrder.setStarRating(feedBackRequest.getStarRating());
         FeedbackOrder feedbackOrderNew = feedBackRepository.save(feedbackOrder);
-        feedbackOrder.setProvider(oder.getUser());
+        feedbackOrder.setProvider(oder.getProvider());
         oder.setFeedback(feedbackOrderNew);
         oderService.save(oder);
         return feedbackOrderNew;

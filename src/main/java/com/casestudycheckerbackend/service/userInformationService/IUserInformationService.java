@@ -43,4 +43,6 @@ public interface IUserInformationService extends IGeneralService<UserInformation
     ProviderHomeResponse convert (UserInformation userInformation);
 
     boolean paymentMoney(PaymentOrderRequest paymentOrderRequest);
+
+    Page<ProviderHomeResponse> findAllByIsProviderAndOrderByNumberOfViews(Pageable pageable);
 }

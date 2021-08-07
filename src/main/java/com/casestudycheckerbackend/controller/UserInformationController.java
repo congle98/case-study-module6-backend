@@ -28,6 +28,7 @@ public class UserInformationController {
 
     @GetMapping("/view/{userId}")
     private ResponseEntity<?>getProfileByUserId(@PathVariable Long userId){
+        System.out.println(userId);
         User user = new User();
         user.setId(userId);
         // la no tu hieu, vi cac doi no mapping voi nhau id, chi can dung id la dc
@@ -102,6 +103,7 @@ public class UserInformationController {
         }
         return new ResponseEntity<>(new MessageResponse("fail"), HttpStatus.NOT_FOUND);
     }
+
 
 
 

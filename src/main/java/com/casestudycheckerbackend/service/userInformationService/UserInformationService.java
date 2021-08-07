@@ -256,4 +256,11 @@ public class UserInformationService implements IUserInformationService{
             return false;
 
     }
+
+    @Override
+    public Page<ProviderHomeResponse> findAllByIsProviderAndOrderByNumberOfViews(Pageable pageable) {
+        Page<UserInformation> userInformationPage = userInformationRepository.findAllByIsProviderOrderByNumberOfViewsDesc(true,pageable);
+        Page<ProviderHomeResponse> providerHomeResponse = userInformationPage.map(this::convert);
+        return  providerHomeResponse;
+    }
 }
