@@ -103,11 +103,11 @@ public class OderService implements IOderService{
 
     @Override
     public StatusOder changeStatus(Long statusId) {
-        Long status = statusId+1;
-        if(1<=status && status>=2){
+
+        if(1<=statusId && statusId<=3){
             return statusOrderRepository.findById(statusId+1).get();
         }
-        else return null;
+        else return statusOrderRepository.findById(5L).get();
 //        switch (statusId){
 //            case 1L: {
 //                StatusOder statusOder=statusOrderRepository.findById(2L).get();
@@ -136,7 +136,7 @@ public class OderService implements IOderService{
     public Boolean cancelOrder(Long id, Long statusId) {
         Optional<Oder> oder =findById(id);
         if(oder.isPresent()){
-            StatusOder newStatus= statusOrderRepository.findById(4L).get();
+            StatusOder newStatus= statusOrderRepository.findById(5L).get();
             Oder oderFix = oder.get();
             oderFix.setStatus(newStatus);
             save(oderFix);
@@ -158,4 +158,6 @@ public class OderService implements IOderService{
     public Page<Oder> finAllByProviderPage(UserInformation provider, Pageable pageable) {
         return oderRepository.findAllByProvider(provider,pageable);
     }
+
+
 }

@@ -1,5 +1,6 @@
 package com.casestudycheckerbackend.controller;
 
+import com.casestudycheckerbackend.dto.request.PaymentOrderRequest;
 import com.casestudycheckerbackend.dto.request.RegisterProviderRequest;
 import com.casestudycheckerbackend.dto.request.UpdateAvatarRequest;
 import com.casestudycheckerbackend.dto.request.UserInformationUpdateRequest;
@@ -8,6 +9,7 @@ import com.casestudycheckerbackend.models.User;
 import com.casestudycheckerbackend.models.UserInformation;
 import com.casestudycheckerbackend.service.image.IImageService;
 import com.casestudycheckerbackend.service.userInformationService.IUserInformationService;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -93,6 +95,15 @@ public class UserInformationController {
         }
         return new ResponseEntity<>(new MessageResponse("fail"),HttpStatus.NOT_FOUND);
     }
+
+    @PutMapping("/paymentOder")
+    public ResponseEntity<?> changeMoney(@RequestBody PaymentOrderRequest paymentOrderRequest){
+        if(userInformationService.paymentMoney(paymentOrderRequest)){
+            return new ResponseEntity<>(new MessageResponse("success"), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new MessageResponse("fail"), HttpStatus.NOT_FOUND);
+    }
+
 
 
 
