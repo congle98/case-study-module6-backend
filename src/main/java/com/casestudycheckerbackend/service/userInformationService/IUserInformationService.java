@@ -40,4 +40,6 @@ public interface IUserInformationService extends IGeneralService<UserInformation
     Page<ProviderHomeResponse> test(Pageable pageable);
 
     ProviderHomeResponse convert (UserInformation userInformation);
+
+    Page<ProviderHomeResponse> findAllByIsProviderAndOrderByNumberOfViews(Pageable pageable);
 }
