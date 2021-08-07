@@ -41,4 +41,10 @@ public class UserController {
         users = userService.findAllPage(pageable);
         return new ResponseEntity<>(users,HttpStatus.OK);
     }
+
+    @PutMapping("/changeStatus")
+    private ResponseEntity<?> changeStatus(@RequestBody Long id){
+        userService.lockAccount(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

@@ -96,8 +96,6 @@ public class AuthenController {
         userService.save(user);
         emailService.send(user,siteURL);
         return new ResponseEntity<>(new MessageResponse("Tạo mới thành công"), HttpStatus.CREATED);
-
-
     }
 
     @GetMapping("/current-user")
