@@ -1,5 +1,6 @@
 package com.casestudycheckerbackend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,7 @@ public class User implements UserDetails {
     @NotEmpty
     @NotBlank
     @Size(min=6)
+
     private String password;
     @NotEmpty
     @Email
@@ -41,7 +43,12 @@ public class User implements UserDetails {
 
     private String phone;
 
-    private Boolean accountStatus = true;
+    private Boolean accountStatus = false;
+
+    private Boolean isVerifyEmail = false;
+
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
 
     private LocalDate joinDate = LocalDate.now();
 
@@ -57,7 +64,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return accountStatus;
     }
 
     @Override
@@ -67,6 +74,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isVerifyEmail;
     }
 }

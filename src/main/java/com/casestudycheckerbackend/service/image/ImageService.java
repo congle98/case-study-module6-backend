@@ -1,7 +1,10 @@
 package com.casestudycheckerbackend.service.image;
 
+import com.casestudycheckerbackend.dto.request.UpdateAvatarRequest;
+import com.casestudycheckerbackend.models.CategoryImage;
 import com.casestudycheckerbackend.models.Image;
 import com.casestudycheckerbackend.models.User;
+import com.casestudycheckerbackend.models.UserInformation;
 import com.casestudycheckerbackend.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +31,40 @@ public class ImageService implements IImageService{
         imageRepository.deleteById(id);
     }
 
+    @Override
+    public Image updateAvatarOfUserInformation(UpdateAvatarRequest updateAvatarRequest) {
+        UserInformation userInformation = new UserInformation();
+        userInformation.setId(updateAvatarRequest.getUserInformationId());
+        CategoryImage categoryImage = new CategoryImage();
+        categoryImage.setId(1l);
+        Image image = imageRepository.findByCategoryImageAndUserInformation(categoryImage,userInformation);
+        if(image!=null){
+            image.setUrl(updateAvatarRequest.getUrl());
+            return imageRepository.save(image);
+        }
+        else {
+            Image newImage = new  Image();
+            newImage.setCategoryImage(categoryImage);
+            newImage.setUserInformation(userInformation);
+            newImage.setUrl(updateAvatarRequest.getUrl());
+            return  imageRepository.save(newImage);
+        }
 
+
+    }
+
+    @Override
+    public Image addImage(UpdateAvatarRequest updateAvatarRequest) {
+        UserInformation userInformation = new UserInformation();
+        userInformation.setId(updateAvatarRequest.getUserInformationId());
+        CategoryImage categoryImage = new CategoryImage();
+        categoryImage.setId(2l);
+        Image image = new Image();
+        image.setCategoryImage(categoryImage);
+        image.setUserInformation(userInformation);
+        image.setUrl(updateAvatarRequest.getUrl());
+        return imageRepository.save(image);
+    }
 
     @Override
     public Image save(Image image) {
@@ -36,7 +72,9 @@ public class ImageService implements IImageService{
     }
 
     @Override
-    public String getAvatars(long id) {
-        return imageRepository.getAvatar(id);
+    public Image avatarByUserInformation(UserInformation userInformation) {
+        CategoryImage categoryImage = new CategoryImage();
+        categoryImage.setId(1l);
+        return imageRepository.findByCategoryImageAndUserInformation(categoryImage,userInformation);
     }
 }

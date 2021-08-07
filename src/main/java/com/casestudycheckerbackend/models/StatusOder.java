@@ -11,18 +11,13 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserServices {
+public class StatusOder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
 
-    @OneToOne
-    private User user;
-
-    @OneToOne
-    private ServicesProvided servicesProvided;
-
-    private Boolean serviceStatus ;
-
-    private Double price;
+    public StatusOder(Long id) {
+        this.id = id;
+    }
 }
