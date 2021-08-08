@@ -1,5 +1,6 @@
 package com.casestudycheckerbackend.service.userInformationService;
 
+import com.casestudycheckerbackend.dto.request.PaymentOrderRequest;
 import com.casestudycheckerbackend.dto.request.RegisterProviderRequest;
 import com.casestudycheckerbackend.dto.request.UpdateAvatarRequest;
 import com.casestudycheckerbackend.dto.request.UserInformationUpdateRequest;
@@ -235,5 +236,31 @@ public class UserInformationService implements IUserInformationService{
             providerHomeResponse.setAvatar(avatarUrl);
             providerHomeResponse.setServicesName(serviceName);
             return providerHomeResponse;
+    }
+
+    @Override
+    public boolean paymentMoney(PaymentOrderRequest paymentOrderRequest) {
+            Long userId = paymentOrderRequest.getUserId();
+            Long providerId= paymentOrderRequest.getProviderId();
+            Double money = paymentOrderRequest.getMoney();
+            UserInformation user = userInformationRepository.getById(userId);
+            UserInformation provider = userInformationRepository.getById(providerId);
+
+            if(user!=null && provider!=null){
+                user.setMoney(user.getMoney()-money);
+                userInformationRepository.save(user);
+                provider.setMoney(provider.getMoney()+money);
+                userInformationRepository.save(provider);
+                return true;
+            }
+            return false;
+
+    }
+
+    @Override
+    public Page<ProviderHomeResponse> findAllByIsProviderAndOrderByNumberOfViews(Pageable pageable) {
+        Page<UserInformation> userInformationPage = userInformationRepository.findAllByIsProviderOrderByNumberOfViewsDesc(true,pageable);
+        Page<ProviderHomeResponse> providerHomeResponse = userInformationPage.map(this::convert);
+        return  providerHomeResponse;
     }
 }

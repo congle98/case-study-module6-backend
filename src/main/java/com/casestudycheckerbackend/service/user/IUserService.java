@@ -18,6 +18,10 @@ public interface IUserService extends IGeneralService<User> {
 
     UserAccountResponse getUserAccount(Long id);
 
-
     Page<User> findAllPage(Pageable pageable);
+
+    void lockAccount(Long id);
+
+
+
 }

@@ -17,5 +17,5 @@ public interface UserInformationRepository extends JpaRepository<UserInformation
 
     List<UserInformation> findByIsProvider(Boolean bl);
 
-
+    Page<UserInformation> findAllByIsProviderOrderByNumberOfViewsDesc(Boolean bl,Pageable pageable);
 }

@@ -102,4 +102,18 @@ public class OrderController {
         oders = oderService.findAllPage(pageable);
         return new ResponseEntity<>(oders,HttpStatus.OK);
     }
+
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<?> editOrder(@PathVariable Long id,  @RequestBody Oder oder){
+        Optional<Oder> oder1 = oderService.findById(id);
+        if(oder1.isPresent()){
+            oderService.save(oder);
+            return new ResponseEntity<>(new MessageResponse("Ok"), HttpStatus.OK);
+
+        }
+        return new ResponseEntity<>(new MessageResponse("fail"), HttpStatus.NOT_FOUND);
+
+    }
+
+
 }
