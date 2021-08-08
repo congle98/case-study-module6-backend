@@ -137,5 +137,9 @@ public class UserService implements IUserService {
         return userRepository.findAll(pageable);
     }
 
+    @Override
+    public void lockAccount( Long id) {
+         userRepository.changeStatus(id);
+    }
 
 }

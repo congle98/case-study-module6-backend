@@ -6,6 +6,9 @@ import com.casestudycheckerbackend.models.User;
 import com.casestudycheckerbackend.service.IGeneralService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface IUserService extends IGeneralService<User> {
     User loadUserByUserName(String username);
@@ -20,8 +23,7 @@ public interface IUserService extends IGeneralService<User> {
 
     Page<User> findAllPage(Pageable pageable);
 
-    void lockAccount(Long id);
-
+    void lockAccount( Long id);
 
 
 }
