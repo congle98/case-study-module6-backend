@@ -45,4 +45,6 @@ public interface IUserInformationService extends IGeneralService<UserInformation
     boolean paymentMoney(PaymentOrderRequest paymentOrderRequest);
 
     Page<ProviderHomeResponse> findAllByIsProviderAndOrderByNumberOfViews(Pageable pageable);
+
+    List<ProviderHomeResponse> searchByFullName(String keywords);
 }
