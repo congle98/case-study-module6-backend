@@ -141,4 +141,5 @@ public class UserService implements IUserService {
     public void lockAccount( Long id) {
          userRepository.changeStatus(id);
     }
+
 }
