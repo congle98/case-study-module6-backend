@@ -1,5 +1,6 @@
 package com.casestudycheckerbackend.controller;
 
+import com.casestudycheckerbackend.dto.request.SearchFilterRequest;
 import com.casestudycheckerbackend.dto.response.ProviderHomeResponse;
 import com.casestudycheckerbackend.service.userInformationService.IUserInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/home")
@@ -63,5 +63,12 @@ public class HomeController {
         providers = userInformationService.findAllByIsProviderAndOrderByNumberOfViews(pageable);
         return new ResponseEntity<>(providers,HttpStatus.OK);
 
+    }
+
+    @PostMapping("/search")
+    private ResponseEntity<?> searchFilter(@RequestBody SearchFilterRequest filterRequest){
+        System.out.println("đây là filter"+filterRequest);
+        List<ProviderHomeResponse> list = userInformationService.searchFilter(filterRequest);
+        return new ResponseEntity<>(list,HttpStatus.OK);
     }
 }
