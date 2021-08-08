@@ -18,4 +18,5 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Transactional
     @Query(value = "UPDATE user SET account_status = !account_status WHERE id=?",nativeQuery = true)
     void changeStatus(Long id);
+
 }
