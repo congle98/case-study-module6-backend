@@ -263,4 +263,17 @@ public class UserInformationService implements IUserInformationService{
         Page<ProviderHomeResponse> providerHomeResponse = userInformationPage.map(this::convert);
         return  providerHomeResponse;
     }
+
+
+    @Override
+    public List<ProviderHomeResponse> searchByFullName(String keywords) {
+        List<ProviderHomeResponse> listResult = new ArrayList<>();
+        List<UserInformation> userInformationList = userInformationRepository.findAllByFullNameContaining(keywords);
+        for (UserInformation information: userInformationList
+             ) {
+            ProviderHomeResponse providerHomeResponse = convert(information);
+            listResult.add(providerHomeResponse);
+        }
+        return listResult;
+    }
 }
