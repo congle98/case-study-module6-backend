@@ -25,7 +25,7 @@ public class UserInformation {
 
     private LocalDate dateOfBirth;
 
-    private Boolean gender;
+    private Boolean gender=false;
 
     @ManyToOne
     private City city;
@@ -43,7 +43,7 @@ public class UserInformation {
 
     private String facebookLink;
 
-    private Double priceByHour;
+    private Double priceByHour=0.0;
 
     @ManyToMany
     @JoinTable(
@@ -57,9 +57,9 @@ public class UserInformation {
     private Boolean isProvider = false;
 
 
-    private int numberOfViews;
+    private int numberOfViews=0;
 
-    private int numberOfRentals;
+    private int numberOfRentals=0;
 
     public Long getId() {
         return id;
