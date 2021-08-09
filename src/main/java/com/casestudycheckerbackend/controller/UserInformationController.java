@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(value = "*",maxAge = 3600)
+@CrossOrigin("*")
 @RequestMapping("/profile")
 public class UserInformationController {
     @Autowired
@@ -102,6 +102,11 @@ public class UserInformationController {
             return new ResponseEntity<>(new MessageResponse("success"), HttpStatus.OK);
         }
         return new ResponseEntity<>(new MessageResponse("fail"), HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/searchByFullName/{keywords}")
+    private ResponseEntity<?> searchByFullName(@PathVariable String keywords){
+        return new ResponseEntity<>(userInformationService.searchByFullName(keywords),HttpStatus.OK);
     }
 
 

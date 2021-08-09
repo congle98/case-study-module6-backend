@@ -1,9 +1,6 @@
 package com.casestudycheckerbackend.service.userInformationService;
 
-import com.casestudycheckerbackend.dto.request.PaymentOrderRequest;
-import com.casestudycheckerbackend.dto.request.RegisterProviderRequest;
-import com.casestudycheckerbackend.dto.request.UpdateAvatarRequest;
-import com.casestudycheckerbackend.dto.request.UserInformationUpdateRequest;
+import com.casestudycheckerbackend.dto.request.*;
 import com.casestudycheckerbackend.dto.response.ProviderHomeResponse;
 import com.casestudycheckerbackend.models.User;
 import com.casestudycheckerbackend.models.UserInformation;
@@ -45,4 +42,8 @@ public interface IUserInformationService extends IGeneralService<UserInformation
     boolean paymentMoney(PaymentOrderRequest paymentOrderRequest);
 
     Page<ProviderHomeResponse> findAllByIsProviderAndOrderByNumberOfViews(Pageable pageable);
+
+    List<ProviderHomeResponse> searchByFullName(String keywords);
+
+    List<ProviderHomeResponse> searchFilter(SearchFilterRequest filterRequest);
 }

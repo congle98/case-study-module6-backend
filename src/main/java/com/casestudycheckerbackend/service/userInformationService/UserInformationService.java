@@ -1,9 +1,6 @@
 package com.casestudycheckerbackend.service.userInformationService;
 
-import com.casestudycheckerbackend.dto.request.PaymentOrderRequest;
-import com.casestudycheckerbackend.dto.request.RegisterProviderRequest;
-import com.casestudycheckerbackend.dto.request.UpdateAvatarRequest;
-import com.casestudycheckerbackend.dto.request.UserInformationUpdateRequest;
+import com.casestudycheckerbackend.dto.request.*;
 import com.casestudycheckerbackend.dto.response.ProviderHomeResponse;
 import com.casestudycheckerbackend.models.Image;
 import com.casestudycheckerbackend.models.ServicesProvided;
@@ -18,9 +15,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserInformationService implements IUserInformationService{
@@ -264,6 +259,68 @@ public class UserInformationService implements IUserInformationService{
         return  providerHomeResponse;
     }
 
+
+    @Override
+    public List<ProviderHomeResponse> searchByFullName(String keywords) {
+        List<ProviderHomeResponse> listResult = new ArrayList<>();
+        List<UserInformation> userInformationList = userInformationRepository.findAllByFullNameContaining(keywords);
+        for (UserInformation information : userInformationList
+        ) {
+            ProviderHomeResponse providerHomeResponse = convert(information);
+            listResult.add(providerHomeResponse);
+        }
+        return listResult;
+    }
+
+    @Override
+    public List<ProviderHomeResponse> searchFilter(SearchFilterRequest filterRequest) {
+        List<ProviderHomeResponse> listResult = new ArrayList<>();
+        List<UserInformation> userInformationList = userInformationRepository.findByIsProvider(true);
+        Iterator<UserInformation> iterator = userInformationList.iterator();
+        while (iterator.hasNext()) {
+            UserInformation user = iterator.next();
+            boolean checkCity = true;
+            boolean checkGender = true;
+            if (filterRequest.getCity() != null && !filterRequest.getCity().trim().equalsIgnoreCase("")) {
+                if (user.getCity() != null) {
+                    if (!user.getCity().getName().trim().equalsIgnoreCase(filterRequest.getCity().trim())) {
+                        iterator.remove();
+                        checkCity = false;
+                    }
+                } else if (user.getCity() == null) {
+                    iterator.remove();
+                    checkCity = false;
+                }
+            }
+            if (filterRequest.getGender() != null && !filterRequest.getGender().trim().equalsIgnoreCase("")) {
+                if (filterRequest.getGender().equalsIgnoreCase("Nam") && !user.getGender()) {
+                    if (checkCity) {
+                        iterator.remove();
+                        checkGender = false;
+                    }
+                } else if (filterRequest.getGender().equalsIgnoreCase("Nữ") && user.getGender()) {
+                    if (checkCity) {
+                        iterator.remove();
+                        checkGender = false;
+                    }
+                }
+            }
+            if (filterRequest.getPrice() != null) {
+                if (user.getPriceByHour() > filterRequest.getPrice()) {
+                    if (checkGender && checkCity) {
+                        iterator.remove();
+                    }
+                }
+            }
+        }
+        for (UserInformation u : userInformationList
+        ) {
+            listResult.add(convert(u));
+        }
+
+
+        return  listResult;
+    }
 
 
 }
