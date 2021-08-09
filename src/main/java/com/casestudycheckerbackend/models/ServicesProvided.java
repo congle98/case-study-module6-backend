@@ -58,4 +58,8 @@ public class ServicesProvided {
     public void setUserInformations(List<UserInformation> userInformations) {
         this.userInformations = userInformations;
     }
+
+    public ServicesProvided(Long id) {
+        this.id = id;
+    }
 }

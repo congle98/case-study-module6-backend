@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table
@@ -29,12 +31,28 @@ public class Oder {
     private LocalDate day;
     private Double totalPrice;
 
+    @ManyToMany
+    @JoinTable(
+            name = "oder_services",
+            joinColumns = @JoinColumn(name = "oder_id"),
+            inverseJoinColumns = @JoinColumn(name = "services_id"))
+    private List<ServicesProvided> services;
+
+
+
     @ManyToOne
     private StatusOder status;
 
     @OneToOne FeedbackOrder feedback;
 
 
+    public List<ServicesProvided> getServices() {
+        return services;
+    }
+
+    public void setServices(List<ServicesProvided> services) {
+        this.services = services;
+    }
 
     public Long getId() {
         return id;

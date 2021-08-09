@@ -13,6 +13,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
     User findByUsername(String username);
 
     User findByVerificationCode(String code);
+
     @Modifying
     @Transactional
     @Query(value = "UPDATE user SET account_status = !account_status WHERE id=?",nativeQuery = true)

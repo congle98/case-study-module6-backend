@@ -1,10 +1,7 @@
 package com.casestudycheckerbackend.service.oder;
 
 import com.casestudycheckerbackend.dto.request.CreateOrderRequest;
-import com.casestudycheckerbackend.models.Oder;
-import com.casestudycheckerbackend.models.StatusOder;
-import com.casestudycheckerbackend.models.User;
-import com.casestudycheckerbackend.models.UserInformation;
+import com.casestudycheckerbackend.models.*;
 import com.casestudycheckerbackend.repository.OderRepository;
 import com.casestudycheckerbackend.repository.StatusOrderRepository;
 import com.casestudycheckerbackend.service.user.IUserService;
@@ -14,9 +11,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class OderService implements IOderService{
@@ -78,6 +80,12 @@ public class OderService implements IOderService{
         oder.setStartTime(createOrderRequest.getStartTime());
         oder.setDay(createOrderRequest.getDay());
         oder.setTotalPrice(createOrderRequest.getTotalPrice());
+
+        List<ServicesProvided> serviceList= userInformation.getServices().stream().map(service->
+                new ServicesProvided(service.getId()))
+                .collect(Collectors.toList());
+
+        oder.setServices(serviceList);
 
         StatusOder statusOder = new StatusOder();
         statusOder.setId(1l);
