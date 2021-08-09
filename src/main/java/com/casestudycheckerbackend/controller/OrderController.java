@@ -36,8 +36,11 @@ public class OrderController {
     @PostMapping("/create")
     public ResponseEntity<?> createNewOrder(@RequestBody CreateOrderRequest createOrderRequest){
         System.out.println("đây là đơn thuê"+createOrderRequest);
-        oderService.createNewOrder(createOrderRequest);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+         Oder oder= oderService.createNewOrder(createOrderRequest);
+         if(oder==null){
+             return new ResponseEntity<>(new MessageResponse("fail"),HttpStatus.FAILED_DEPENDENCY);
+         }
+        return new ResponseEntity<>(new MessageResponse("ok"),HttpStatus.CREATED);
     }
 
     @PutMapping("/accept/{id}")

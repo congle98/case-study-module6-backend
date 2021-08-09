@@ -4,20 +4,14 @@ import com.casestudycheckerbackend.dto.request.CreateOrderRequest;
 import com.casestudycheckerbackend.models.*;
 import com.casestudycheckerbackend.repository.OderRepository;
 import com.casestudycheckerbackend.repository.StatusOrderRepository;
-import com.casestudycheckerbackend.service.user.IUserService;
 import com.casestudycheckerbackend.service.userInformationService.IUserInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,11 +61,17 @@ public class OderService implements IOderService{
 
     @Override
     public Oder createNewOrder(CreateOrderRequest createOrderRequest) {
+
         User user = new User();
         user.setId(createOrderRequest.getUserId());
         UserInformation providerInformation = new UserInformation();
         providerInformation.setId(createOrderRequest.getProviderInformationId());
+
         UserInformation userInformation = userInformationService.findByUser(user);
+        if(userInformation.getMoney()<createOrderRequest.getTotalPrice()){
+            return null;
+        }
+
         Oder oder = new Oder();
         oder.setAddress(createOrderRequest.getAddress());
         oder.setHour(createOrderRequest.getHour());
