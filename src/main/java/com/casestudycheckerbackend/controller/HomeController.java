@@ -64,6 +64,20 @@ public class HomeController {
         return new ResponseEntity<>(providers,HttpStatus.OK);
 
     }
+    @GetMapping("/findAllByRentals")
+    private ResponseEntity<?> findAllProviderByRentals(Integer page){
+        Page<ProviderHomeResponse> providers;
+        Pageable pageable;
+        if(page!=null){
+            pageable = PageRequest.of(page,8);
+        }
+        else {
+            pageable = PageRequest.of(0,8);
+        }
+        providers = userInformationService.findAllByIsProviderAndOrderByNumberOfRentals(pageable);
+        return new ResponseEntity<>(providers,HttpStatus.OK);
+
+    }
 
     @PostMapping("/search")
     private ResponseEntity<?> searchFilter(@RequestBody SearchFilterRequest filterRequest){
