@@ -46,4 +46,6 @@ public interface IUserInformationService extends IGeneralService<UserInformation
     List<ProviderHomeResponse> searchByFullName(String keywords);
 
     List<ProviderHomeResponse> searchFilter(SearchFilterRequest filterRequest);
+
+    Page<ProviderHomeResponse> findAllByIsProviderAndOrderByNumberOfRentals(Pageable pageable);
 }

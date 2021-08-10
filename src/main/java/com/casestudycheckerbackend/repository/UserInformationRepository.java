@@ -13,11 +13,13 @@ import java.util.List;
 public interface UserInformationRepository extends JpaRepository<UserInformation,Long> {
     UserInformation findByUser(User user);
 
-    Page<UserInformation> findAllByIsProvider(Boolean bl,Pageable pageable);
+    Page<UserInformation> findAllByIsProviderOrderByIdDesc(Boolean bl,Pageable pageable);
 
     List<UserInformation> findByIsProvider(Boolean bl);
 
     Page<UserInformation> findAllByIsProviderOrderByNumberOfViewsDesc(Boolean bl,Pageable pageable);
 
     List<UserInformation> findAllByFullNameContaining(String keywords);
+
+    Page<UserInformation> findAllByIsProviderOrderByNumberOfRentalsDesc(Boolean bl,Pageable pageable);
 }

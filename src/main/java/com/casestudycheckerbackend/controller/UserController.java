@@ -5,6 +5,7 @@ import com.casestudycheckerbackend.dto.response.ProviderHomeResponse;
 import com.casestudycheckerbackend.models.User;
 import com.casestudycheckerbackend.models.UserInformation;
 import com.casestudycheckerbackend.service.user.IUserService;
+import com.casestudycheckerbackend.service.userInformationService.IUserInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @RestController
@@ -21,6 +23,8 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     private IUserService userService;
+    @Autowired
+    private IUserInformationService userInformationService;
 
     @GetMapping("/view/{userId}")
     private ResponseEntity<?>getProfileByUserId(@PathVariable Long userId){
@@ -46,5 +50,11 @@ public class UserController {
     private ResponseEntity<?> changeStatus(@RequestBody Long id){
         userService.lockAccount(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/selectUserChat/{userId}")
+    public ResponseEntity<?> selectUserChat(@PathVariable Long userId) {
+        UserInformation userInformation = userInformationService.findById(userId).get();
+        return new ResponseEntity<>(userInformationService.convert(userInformation),HttpStatus.OK);
     }
 }

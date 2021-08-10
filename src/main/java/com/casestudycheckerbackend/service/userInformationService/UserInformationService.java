@@ -156,7 +156,7 @@ public class UserInformationService implements IUserInformationService{
 
     @Override
     public Page<ProviderHomeResponse> findAllProviderHomePage(Pageable pageable) {
-        Page<UserInformation> userInformationPage = userInformationRepository.findAllByIsProvider(true,pageable);
+        Page<UserInformation> userInformationPage = userInformationRepository.findAllByIsProviderOrderByIdDesc(true,pageable);
         List<ProviderHomeResponse> providerHomeResponseList = new ArrayList<>();
         for (UserInformation userInformation: userInformationPage.getContent()) {
             ProviderHomeResponse providerHomeResponse = new ProviderHomeResponse();
@@ -206,7 +206,7 @@ public class UserInformationService implements IUserInformationService{
 
     @Override
     public Page<ProviderHomeResponse> test(Pageable pageable) {
-        Page<UserInformation> userInformationPage = userInformationRepository.findAllByIsProvider(true,pageable);
+        Page<UserInformation> userInformationPage = userInformationRepository.findAllByIsProviderOrderByIdDesc(true,pageable);
         Page<ProviderHomeResponse> providerHomeResponse = userInformationPage.map(this::convert);
         return  providerHomeResponse;
     }
@@ -322,5 +322,10 @@ public class UserInformationService implements IUserInformationService{
         return  listResult;
     }
 
-
+    @Override
+    public Page<ProviderHomeResponse> findAllByIsProviderAndOrderByNumberOfRentals(Pageable pageable) {
+        Page<UserInformation> userInformationPage = userInformationRepository.findAllByIsProviderOrderByNumberOfRentalsDesc(true,pageable);
+        Page<ProviderHomeResponse> providerHomeResponse = userInformationPage.map(this::convert);
+        return  providerHomeResponse;
+    }
 }
