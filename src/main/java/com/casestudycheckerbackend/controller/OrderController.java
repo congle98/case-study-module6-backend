@@ -102,7 +102,7 @@ public class OrderController {
         else {
             pageable = PageRequest.of(0,20);
         }
-        oders = oderService.findAllPage(pageable);
+        oders = oderService.findAllOrderById(pageable);
         return new ResponseEntity<>(oders,HttpStatus.OK);
     }
 

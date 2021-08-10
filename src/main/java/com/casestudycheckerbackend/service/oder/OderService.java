@@ -167,5 +167,8 @@ public class OderService implements IOderService{
         return oderRepository.findAllByProvider(provider,pageable);
     }
 
-
+    @Override
+    public Page<Oder> findAllOrderById(Pageable pageable) {
+        return oderRepository.findAllByOrderByIdDesc(pageable);
+    }
 }
