@@ -21,4 +21,6 @@ public interface IOderService extends IGeneralService<Oder> {
 
     Page<Oder> finAllByProviderPage(UserInformation provider, Pageable pageable);
 
+    Page<Oder> findAllOrderById(Pageable pageable);
+
 }

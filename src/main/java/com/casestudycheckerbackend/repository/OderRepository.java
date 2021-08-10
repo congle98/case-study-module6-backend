@@ -20,4 +20,6 @@ public interface OderRepository extends JpaRepository<Oder, Long> {
 
     Page<Oder> findAllByProvider(UserInformation provider,Pageable pageable);
 
+    Page<Oder> findAllByOrderByIdDesc(Pageable pageable);
+
 }

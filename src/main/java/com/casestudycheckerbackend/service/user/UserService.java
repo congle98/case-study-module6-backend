@@ -108,6 +108,7 @@ public class UserService implements IUserService {
         user.setVerificationCode(randomCode);
         UserInformation userInformation = new UserInformation();
         User userDB = userRepository.save(user);
+        userInformation.setId(userDB.getId());
         userInformation.setUser(userDB);
         userInformation.setFullName(userDB.getUsername());
         userInformationService.save(userInformation);

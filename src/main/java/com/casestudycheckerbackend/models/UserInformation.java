@@ -52,7 +52,7 @@ public class UserInformation {
             inverseJoinColumns = @JoinColumn(name = "service_id"))
     private List<ServicesProvided> services;
 
-    private Double money = 100000.0;
+    private Double money = 1000000.0;
 
     private Boolean isProvider = false;
 
