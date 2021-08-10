@@ -245,7 +245,10 @@ public class UserInformationService implements IUserInformationService{
                 user.setMoney(user.getMoney()-money);
                 userInformationRepository.save(user);
                 provider.setMoney(provider.getMoney()+money);
+                provider.setNumberOfRentals(provider.getNumberOfRentals()+1);
+
                 userInformationRepository.save(provider);
+
                 return true;
             }
             return false;
