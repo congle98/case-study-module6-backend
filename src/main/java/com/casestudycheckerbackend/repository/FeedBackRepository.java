@@ -13,4 +13,5 @@ import java.util.List;
 @Repository
 public interface FeedBackRepository extends JpaRepository<FeedbackOrder,Long> {
     Page<FeedbackOrder> findAllByConfirmAndProvider(Boolean bl, UserInformation provider, Pageable pageable);
+    Page<FeedbackOrder> findAllByConfirmAndProviderOrderByCreateDateDesc(Boolean bl, UserInformation provider, Pageable pageable);
 }

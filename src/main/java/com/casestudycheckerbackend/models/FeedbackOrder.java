@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -23,6 +25,8 @@ public class FeedbackOrder {
     private Integer starRating;
 
     private String description;
+
+    private LocalDateTime createDate = LocalDateTime.now();
 
     private Boolean confirm=false;
 
