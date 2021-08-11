@@ -72,7 +72,7 @@ public class FeedBackService implements IFeedBackService {
     public Page<FeedBackByProviderRespone> findAllByProvider(Long userId, Pageable pageable) {
         UserInformation provider = new UserInformation();
         provider.setId(userId);
-       Page<FeedbackOrder> feedbackOrder = feedBackRepository.findAllByConfirmAndProvider(true,provider,pageable);
+       Page<FeedbackOrder> feedbackOrder = feedBackRepository.findAllByConfirmAndProviderOrderByCreateDateDesc(true,provider,pageable);
 //        UserInformation provider = new UserInformation();
 //        provider.setId(userId);
 //        Page<Oder> oderPage = oderService.finAllByProviderPage(provider, pageable);
@@ -94,6 +94,7 @@ public class FeedBackService implements IFeedBackService {
         feedBackByProviderRespone.setDescription(feedbackOrder.getDescription());
         feedBackByProviderRespone.setStarRating(feedbackOrder.getStarRating());
         feedBackByProviderRespone.setUserName(feedbackOrder.getOder().getUser().getFullName());
+        feedBackByProviderRespone.setCreateDate(feedbackOrder.getCreateDate());
         Image avatar = imageService.avatarByUserInformation(feedbackOrder.getOder().getUser());
         if (avatar != null) {
             String avatarUrl = avatar.getUrl();
