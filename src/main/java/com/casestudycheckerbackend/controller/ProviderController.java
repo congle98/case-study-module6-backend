@@ -1,4 +1,4 @@
-package com.casestudycheckerbackend.controller.providerController;
+package com.casestudycheckerbackend.controller;
 
 
 import com.casestudycheckerbackend.dto.response.MessageResponse;
