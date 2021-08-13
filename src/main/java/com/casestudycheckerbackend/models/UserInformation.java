@@ -18,7 +18,7 @@ public class UserInformation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     private User user;
 
     private String fullName;
@@ -27,7 +27,7 @@ public class UserInformation {
 
     private Boolean gender=false;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private City city;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "userInformation")
