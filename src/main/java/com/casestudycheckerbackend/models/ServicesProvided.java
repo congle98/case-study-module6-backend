@@ -17,7 +17,7 @@ public class ServicesProvided {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_service_id")
     private CategoryService categoryService;
 

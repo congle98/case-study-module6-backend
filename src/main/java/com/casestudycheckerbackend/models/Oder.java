@@ -18,10 +18,10 @@ public class Oder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id ;
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private UserInformation user;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private UserInformation  provider;
 
     private String address;
@@ -31,7 +31,7 @@ public class Oder {
     private LocalDate day;
     private Double totalPrice;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "oder_services",
             joinColumns = @JoinColumn(name = "oder_id"),
@@ -40,10 +40,11 @@ public class Oder {
 
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private StatusOder status;
 
-    @OneToOne FeedbackOrder feedback;
+    @OneToOne(fetch = FetchType.EAGER)
+    FeedbackOrder feedback;
 
 
     public List<ServicesProvided> getServices() {

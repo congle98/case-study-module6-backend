@@ -17,6 +17,6 @@ public class City {
     private Long id;
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Country country;
 }
