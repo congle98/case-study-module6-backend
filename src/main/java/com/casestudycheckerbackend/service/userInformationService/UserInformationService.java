@@ -102,7 +102,7 @@ public class UserInformationService implements IUserInformationService{
 
     @Override
     public Boolean isProvider(Long id) {
-       UserInformation  user =  userInformationRepository.getById(id);
+       UserInformation  user =  userInformationRepository.findById(id).get();
         if(user!=null){
             Boolean check= user.getProvider();
             user.setProvider(!check);
@@ -114,7 +114,7 @@ public class UserInformationService implements IUserInformationService{
 
     @Override
     public Double changePrice(Long id, Double price){
-        UserInformation  user =  userInformationRepository.getById(id);
+        UserInformation  user =  userInformationRepository.findById(id).get();
         if(user!=null){
 
             user.setPriceByHour(price);
@@ -238,8 +238,8 @@ public class UserInformationService implements IUserInformationService{
             Long userId = paymentOrderRequest.getUserId();
             Long providerId= paymentOrderRequest.getProviderId();
             Double money = paymentOrderRequest.getMoney();
-            UserInformation user = userInformationRepository.getById(userId);
-            UserInformation provider = userInformationRepository.getById(providerId);
+            UserInformation user = userInformationRepository.findById(userId).get();
+            UserInformation provider = userInformationRepository.findById(providerId).get();
 
             if(user!=null && provider!=null){
                 user.setMoney(user.getMoney()-money);
